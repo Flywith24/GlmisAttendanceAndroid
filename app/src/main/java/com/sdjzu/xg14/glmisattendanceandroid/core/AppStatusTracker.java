@@ -18,7 +18,7 @@ import com.sdjzu.xg14.glmisattendanceandroid.utils.L;
  * @version 1.0.0
  */
 
-class AppStatusTracker implements Application.ActivityLifecycleCallbacks {
+public class AppStatusTracker implements Application.ActivityLifecycleCallbacks {
     private static final long MAX_INTERVAL = 5 * 60 * 1000;
     private static AppStatusTracker tracker;
     private Application application;

@@ -11,4 +11,16 @@ public class Attendance {
     private long id;
     private String attendanceTime;
     private boolean isAttendant;
+
+    public long getId() {
+        return id;
+    }
+
+    public String getAttendanceTime() {
+        return attendanceTime;
+    }
+
+    public boolean isAttendant() {
+        return isAttendant;
+    }
 }

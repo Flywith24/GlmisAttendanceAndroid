@@ -1,13 +1,25 @@
 package com.sdjzu.xg14.glmisattendanceandroid;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class HomeActivity extends AppCompatActivity {
+import com.sdjzu.xg14.glmisattendanceandroid.core.BaseActivity;
+
+
+public class HomeActivity extends BaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+    protected void setUpContentView() {
+        setContentView(R.layout.activity_home, R.string.app_name, MODE_DRAWER);
+
+    }
+
+    @Override
+    protected void setUpView() {
+
+    }
+
+    @Override
+    protected void setUpData(Bundle savedInstanceState) {
+
     }
 }

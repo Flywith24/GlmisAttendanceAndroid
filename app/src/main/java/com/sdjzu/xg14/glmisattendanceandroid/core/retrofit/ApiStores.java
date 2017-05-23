@@ -1,6 +1,6 @@
 package com.sdjzu.xg14.glmisattendanceandroid.core.retrofit;
 
-import com.sdjzu.xg14.glmisattendanceandroid.model.Admin;
+import com.sdjzu.xg14.glmisattendanceandroid.model.User;
 
 import retrofit2.http.Body;
 import retrofit2.http.POST;
@@ -14,7 +14,7 @@ import rx.Observable;
  */
 
 public interface ApiStores {
-    @POST("login.json")
-    Observable<String> loadLoginData(@Body Admin admin);
+    @POST("androidLogin.json")
+    Observable<String> loadLoginData(@Body User user);
 
 }

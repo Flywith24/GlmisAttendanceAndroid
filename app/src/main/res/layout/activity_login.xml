@@ -22,15 +22,15 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/logo_login"
+            android:src="@drawable/logo_login"
             android:layout_marginTop="50dp"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/logo_word_login"
+            android:src="@drawable/logo_word_login"
             android:layout_marginTop="10dp"/>
         <EditText
-            android:id="@+id/username_et"
+            android:id="@id/username_et"
             style="@style/Login_style"
             android:layout_marginTop="20dp"
             android:hint="账号"
@@ -42,7 +42,7 @@
             android:layout_height="1dp"
             android:background="@color/login_line_bg"/>
         <EditText
-            android:id="@+id/password_et"
+            android:id="@id/password_et"
             style="@style/Login_style"
             android:hint="密码"
             android:text="123456"
@@ -51,7 +51,7 @@
 
 
     <Button
-        android:id="@+id/login_btn"
+        android:id="@id/login_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"

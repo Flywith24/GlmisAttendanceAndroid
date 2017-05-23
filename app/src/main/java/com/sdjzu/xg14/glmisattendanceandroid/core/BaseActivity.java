@@ -56,9 +56,17 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
 
     protected abstract void setUpView();
 
+    /**
+     * 初始化数据
+     * 被允许初始化才能进行初始化操作，防止应用被强杀而系统保存Activity栈信息导致空指针
+     * @param savedInstanceState
+     */
     protected abstract void setUpData(Bundle savedInstanceState);
 
 
+    /**
+     * 当应用被强杀时调用此方法，返回到主页，进而重新走应用流程
+     */
     protected void protectApp() {
         Intent intent = new Intent(this, HomeActivity.class);
         intent.putExtra(ConstantValues.KEY_HOME_ACTION, ConstantValues.ACTION_RESTART_APP);
@@ -96,6 +104,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
             toolbar.setTitle("");
             toolbar_title = (TextView) findViewById(R.id.toolbar_title);
 
+            //带返回键的
             if (mode == MODE_BACK) {
                 toolbar.setNavigationIcon(R.drawable.ic_toolbar_back);
             }
@@ -140,7 +149,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
     protected void onStart() {
         if (AppStatusTracker.getInstance().checkIfShowGesture()) {
             L.d(TAG,"need to show gesture");
-
         }
         super.onStart();
     }
