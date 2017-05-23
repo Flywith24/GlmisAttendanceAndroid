@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">GlmisAttendanceAndroid</string>
+    <string name="login_text">登录</string>
+</resources>

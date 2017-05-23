@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:background="@color/login_bg"
+    tools:context="com.sdjzu.xg14.glmisattendanceandroid.login.LoginActivity"
+    >
+
+    <LinearLayout
+        android:id="@+id/layout_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/logo_login"
+            android:layout_marginTop="50dp"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/logo_word_login"
+            android:layout_marginTop="10dp"/>
+        <EditText
+            android:id="@+id/username_et"
+            style="@style/Login_style"
+            android:layout_marginTop="20dp"
+            android:hint="账号"
+            android:inputType="number"
+            android:text="123456"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/login_line_bg"/>
+        <EditText
+            android:id="@+id/password_et"
+            style="@style/Login_style"
+            android:hint="密码"
+            android:text="123456"
+            android:inputType="numberPassword"/>
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/login_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/login_text"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:background="@drawable/login_btn_selector"/>
+
+    <LinearLayout
+        android:id="@+id/layout_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"/>
+
+</LinearLayout>
