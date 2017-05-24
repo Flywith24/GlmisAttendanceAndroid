@@ -22,8 +22,8 @@ public class LoginPresenter extends BasePresenter<LoginView> {
         addSubscription(mApiStores.loadLoginData(user),
                 new ApiCallback<String>() {
                     @Override
-                    public void onSuccess(String tutorStr) {
-                        mvpView.loginSuccess(user);
+                    public void onSuccess(String userStr) {
+                        mvpView.loginSucceed(user);
                     }
 
                     @Override
@@ -38,15 +38,5 @@ public class LoginPresenter extends BasePresenter<LoginView> {
 
                 });
     }
-
-
-    private User handleData(String tutorStr, User user1) {
-        //解析数据
-        Gson gson = new Gson();
-        User user = gson.fromJson(tutorStr, User.class);
-
-        return user;
-    }
-
 
 }

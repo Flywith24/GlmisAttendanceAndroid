@@ -33,7 +33,7 @@
             android:id="@id/username_et"
             style="@style/Login_style"
             android:layout_marginTop="20dp"
-            android:hint="账号"
+            android:hint="@string/login_account"
             android:inputType="number"
             android:text="123456"
             />

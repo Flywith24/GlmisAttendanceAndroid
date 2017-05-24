@@ -20,13 +20,10 @@ public abstract class MvpFragment<P extends BasePresenter> extends BaseFragment 
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mvpPresenter = createPresenter();
-        initData();
     }
 
-    protected abstract void initData();
 
     protected abstract P createPresenter();
-
 
     @Override
     public void onDestroyView() {

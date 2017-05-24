@@ -3,6 +3,7 @@ package com.sdjzu.xg14.glmisattendanceandroid.core;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -22,7 +23,7 @@ import com.sdjzu.xg14.glmisattendanceandroid.utils.L;
  * @version 1.0.0
  */
 
-public abstract class BaseActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener  {
+public abstract class BaseActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
     protected Toolbar toolbar;
     protected TextView toolbar_title;
     protected ProgressDialog progressDialog;
@@ -32,6 +33,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
     public static final int MODE_NONE = 2;
     public static final int MODE_HOME = 3;
     private static final String TAG = "BaseActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +61,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
     /**
      * 初始化数据
      * 被允许初始化才能进行初始化操作，防止应用被强杀而系统保存Activity栈信息导致空指针
+     *
      * @param savedInstanceState
      */
     protected abstract void setUpData(Bundle savedInstanceState);
@@ -101,19 +104,18 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
     protected void setUpToolbar(int titleResId, int menuId, int mode) {
         if (mode != MODE_NONE) {
             toolbar = (Toolbar) findViewById(R.id.toolbar);
-            toolbar.setTitle("");
+            toolbar.setTitle("");//这条语句要在setSupportActionBar之前
+            setSupportActionBar(toolbar);//将actionBar设置成toolbar的样式
             toolbar_title = (TextView) findViewById(R.id.toolbar_title);
 
             //带返回键的
             if (mode == MODE_BACK) {
                 toolbar.setNavigationIcon(R.drawable.ic_toolbar_back);
+            } else if (mode == MODE_DRAWER) {
+                ActionBar actionBar = getSupportActionBar();
+                actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setHomeAsUpIndicator(R.drawable.ic_toolbar_drawer);
             }
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onNavigationBtnClicked();
-                }
-            });
 
             setUpTitle(titleResId);
             setUpMenu(menuId);
@@ -136,10 +138,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
         }
     }
 
-    protected void onNavigationBtnClicked() {
-        finish();
-    }
-
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         return false;
@@ -148,10 +146,11 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
     @Override
     protected void onStart() {
         if (AppStatusTracker.getInstance().checkIfShowGesture()) {
-            L.d(TAG,"need to show gesture");
+            L.d(TAG, "need to show gesture");
         }
         super.onStart();
     }
+
     public ProgressDialog showProgressDialog() {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("加载中");

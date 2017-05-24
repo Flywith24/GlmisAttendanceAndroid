@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="titles">
+        <item>未出勤</item>
+        <item>已出勤</item>
+    </string-array>
+</resources>

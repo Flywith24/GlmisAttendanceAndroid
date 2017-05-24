@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_info"
+            android:title="我的信息" />
+        <item
+            android:id="@+id/nav_haha"
+            android:title="哈哈哈哈" />
+        <item
+            android:id="@+id/nav_logout"
+            android:title="退出登录" />
+        <item
+            android:id="@+id/nav_about"
+            android:title="关于软件" />
+    </group>
+</menu>

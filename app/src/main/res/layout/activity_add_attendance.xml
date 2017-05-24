@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/widget_toobar"/>
+
+    <!--
+    color:设置strip（线条）的颜色
+    size:设置title的大小。默认是自动大小。
+    weight:设置strip的weight（高度）。
+    factor:设置strip的缩放因数。
+    titles:设置NavigationTabStrip的标题，即每一个tab。
+    type:设置strip的类型－线条还是圆点。
+    gravity:设置strip的gravity －  top 还是 bottom
+    view pager:把NavigationTabStrip和ViewPager关联。如果你想，也可以设置OnPageChangeListener。
+    typeface:设置标题的自定义字体。
+    corners radius:设置strip的边角半径。
+    animation duration:设置动画持续时间。
+    inactive color:设置标题未激活时的颜色。
+    active color:设置标题激活时的颜色
+    tab strip listener:在设置tab索引时的开始和结束的监听者。-->
+    <com.gigamole.library.navigationtabstrip.NavigationTabStrip
+        android:id="@+id/nts_center"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        app:nts_active_color="#3cdedd"
+        app:nts_color="#3cdedd"
+        app:nts_corners_radius="3.5dp"
+        app:nts_factor="0.8"
+        app:nts_gravity="bottom"
+        app:nts_inactive_color="#FF020202"
+        app:nts_size="18dp"
+        app:nts_titles="@array/titles"
+        app:nts_type="point"
+        app:nts_weight="7dp"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v4.view.ViewPager>
+</LinearLayout>

@@ -7,10 +7,11 @@ package com.sdjzu.xg14.glmisattendanceandroid.model;
  * @version 1.0.0
  */
 
-public class Attendance {
+public class AttendanceRecord {
     private long id;
     private String attendanceTime;
     private boolean isAttendant;
+    private long employeeId;
 
     public long getId() {
         return id;

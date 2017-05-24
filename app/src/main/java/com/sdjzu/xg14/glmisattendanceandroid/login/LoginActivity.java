@@ -35,7 +35,7 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
 
     @Override
     protected void setUpContentView() {
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_login,-1,MODE_NONE);
     }
 
     @Override
@@ -83,7 +83,7 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
     }
 
     @Override
-    public void loginSuccess(User user) {
+    public void loginSucceed(User user) {
         jumpToHomePage();
     }
 

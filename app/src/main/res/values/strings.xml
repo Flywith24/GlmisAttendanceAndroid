@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">考勤管理</string>
     <string name="login_text">登录</string>
+    <string name="login_account">账号</string>
+    <string name="nav_welcome">欢迎您</string>
+    <string name="add_attendance">新建考勤</string>
+
+
+
 </resources>

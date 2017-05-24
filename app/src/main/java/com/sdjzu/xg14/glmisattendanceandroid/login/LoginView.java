@@ -11,7 +11,7 @@ import com.sdjzu.xg14.glmisattendanceandroid.model.User;
  */
 
 public interface LoginView extends IBaseView {
-    void loginSuccess(User user);
+    void loginSucceed(User user);
 
     void loginFailed(String msg);
 }
