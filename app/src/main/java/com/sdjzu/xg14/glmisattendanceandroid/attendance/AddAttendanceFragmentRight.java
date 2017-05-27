@@ -4,6 +4,7 @@ import android.view.View;
 
 import com.sdjzu.xg14.glmisattendanceandroid.core.mvp.MvpFragment;
 import com.sdjzu.xg14.glmisattendanceandroid.model.Employee;
+import com.sdjzu.xg14.glmisattendanceandroid.utils.L;
 
 import java.util.List;
 
@@ -15,9 +16,10 @@ import java.util.List;
  */
 
 public class AddAttendanceFragmentRight extends MvpFragment<GetEmployeeInfoPresenter> implements IGetEmployeeInfoView {
+
     @Override
     public void setUpView(View view) {
-
+        L.d("Right");
     }
 
     @Override

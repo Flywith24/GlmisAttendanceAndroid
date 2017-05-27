@@ -1,14 +1,9 @@
 package com.sdjzu.xg14.glmisattendanceandroid.attendance;
 
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.sdjzu.xg14.glmisattendanceandroid.core.mvp.BasePresenter;
 import com.sdjzu.xg14.glmisattendanceandroid.core.retrofit.ApiCallback;
-import com.sdjzu.xg14.glmisattendanceandroid.model.AttendanceRecord;
-import com.sdjzu.xg14.glmisattendanceandroid.model.Employee;
-
-import java.util.List;
+import com.sdjzu.xg14.glmisattendanceandroid.model.AttendanceSummary;
 
 /**
  * Created on 23/05/2017.
@@ -22,7 +17,7 @@ public class AddAttendancePresenter extends BasePresenter<IAddAttendanceView> {
         attachView(view);
     }
 
-    public void addAttendanceData(AttendanceRecord record) {
+    public void addAttendanceData(AttendanceSummary record) {
         mvpView.showLoading();
         addSubscription(mApiStores.addAttendanceData(record), new ApiCallback() {
             @Override

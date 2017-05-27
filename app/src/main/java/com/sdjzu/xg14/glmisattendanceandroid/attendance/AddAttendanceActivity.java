@@ -1,6 +1,9 @@
 package com.sdjzu.xg14.glmisattendanceandroid.attendance;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -22,6 +25,8 @@ public class AddAttendanceActivity extends MvpActivity<AddAttendancePresenter> i
     private ViewPager mViewPager;
 
     private NavigationTabStrip mTopNavigationTabStrip;
+    private AddAttendanceFragmentLeft mFragmentLeft;
+    private AddAttendanceFragmentRight mFragmentRight;
 
     @Override
     protected void setUpContentView() {
@@ -32,6 +37,7 @@ public class AddAttendanceActivity extends MvpActivity<AddAttendancePresenter> i
     protected void setUpView() {
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mTopNavigationTabStrip = (NavigationTabStrip) findViewById(R.id.nts_center);
+//        mViewPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager()));
         mViewPager.setAdapter(new PagerAdapter() {
             @Override
             public int getCount() {
@@ -55,7 +61,9 @@ public class AddAttendanceActivity extends MvpActivity<AddAttendancePresenter> i
                 return view;
             }
         });
+
         mTopNavigationTabStrip.setViewPager(mViewPager, 1);
+
     }
 
     @Override
@@ -76,6 +84,49 @@ public class AddAttendanceActivity extends MvpActivity<AddAttendancePresenter> i
 
     @Override
     public void addAttendanceFailed(String msg) {
+
+    }
+
+    class MyFragmentPagerAdapter extends FragmentPagerAdapter {
+        public MyFragmentPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+
+                    if (null == mFragmentLeft) {
+                        mFragmentLeft = new AddAttendanceFragmentLeft();
+                    }
+                    return mFragmentLeft;
+
+                case 1:
+                    if (null == mFragmentRight) {
+                        mFragmentRight = new AddAttendanceFragmentRight();
+                    }
+                    return mFragmentRight;
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+
+        @Override
+        public boolean isViewFromObject(final View view, final Object object) {
+            return view.equals(object);
+        }
+
+        @Override
+        public void destroyItem(final View container, final int position, final Object object) {
+            ((ViewPager) container).removeView((View) object);
+        }
+
 
     }
 }

@@ -1,6 +1,6 @@
 package com.sdjzu.xg14.glmisattendanceandroid.core.retrofit;
 
-import com.sdjzu.xg14.glmisattendanceandroid.model.AttendanceRecord;
+import com.sdjzu.xg14.glmisattendanceandroid.model.AttendanceSummary;
 import com.sdjzu.xg14.glmisattendanceandroid.model.User;
 
 import retrofit2.http.Body;
@@ -22,7 +22,7 @@ public interface ApiStores {
     Observable<String> loadEmployeeData();
 
     @POST("addAttendance.json")
-    Observable<String> addAttendanceData(@Body AttendanceRecord attendanceRecord);
+    Observable<String> addAttendanceData(@Body AttendanceSummary AttendanceSummary);
 
 }
 

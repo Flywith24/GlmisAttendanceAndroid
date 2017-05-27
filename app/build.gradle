@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion 25
@@ -17,6 +18,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+}
+greendao {
+    schemaVersion 1
+    daoPackage 'com.sdjzu.xg14.glmisattendanceandroid.greendao'
+    targetGenDir 'src/main/java'
 }
 
 dependencies {
@@ -40,6 +46,10 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:25.3.1'
 
     compile 'com.github.devlight.navigationtabstrip:library:1.0.1'//顶部指示器
+
+    //greendao
+    compile 'org.greenrobot:greendao-generator:3.0.0'
+    compile 'org.greenrobot:greendao:3.2.0'
 
     testCompile 'junit:junit:4.12'
 }
