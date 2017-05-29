@@ -30,26 +30,27 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     //retrofit依赖库的版本必须要保持一致
-    compile 'com.squareup.retrofit2:retrofit:2.2.0'//Retrofit依赖
-    compile 'com.squareup.retrofit2:converter-gson:2.2.0'//Retrofit数据转换的依赖，可以直接将json转化为实体类
+    //Retrofit依赖
+    //Retrofit数据转换的依赖，可以直接将json转化为实体类
+    compile 'com.squareup.retrofit2:retrofit:2.2.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
     compile 'com.squareup.retrofit2:converter-scalars:2.2.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.2.0'
-
     compile 'io.reactivex:rxandroid:1.1.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'//OKHttp
-
+    //OKHttp
+    compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
     compile 'com.android.support:design:25.3.1'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.android.support:recyclerview-v7:25.3.1'
-
-    compile 'com.github.devlight.navigationtabstrip:library:1.0.1'//顶部指示器
-
+    //顶部指示器
+    compile 'com.github.devlight.navigationtabstrip:library:1.0.1'
     //greendao
-    compile 'org.greenrobot:greendao-generator:3.0.0'
     compile 'org.greenrobot:greendao:3.2.0'
-
+    compile 'org.greenrobot:greendao-generator:3.0.0'
+    compile 'com.android.support:support-v4:25.3.1'
     testCompile 'junit:junit:4.12'
 }

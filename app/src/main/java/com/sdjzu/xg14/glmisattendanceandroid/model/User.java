@@ -1,10 +1,5 @@
 package com.sdjzu.xg14.glmisattendanceandroid.model;
 
-import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.annotation.Property;
-
 /**
  * Created on 19/05/2017.
  *
@@ -12,28 +7,22 @@ import org.greenrobot.greendao.annotation.Property;
  * @version 1.0.0
  */
 
-@Entity
 public class User {
-    @Id
     private long id;
-    @Property(nameInDb = "USERNAME")
-    private String uername;
-    @Property(nameInDb = "PASSWORD")
+    private String username;
     private String password;
 
-    public User(String uername, String password) {
-        this.uername = uername;
+    public User(String username, String password) {
+        this.username = username;
         this.password = password;
     }
 
-    @Generated(hash = 1319603477)
-    public User(long id, String uername, String password) {
+    public User(long id, String username, String password) {
         this.id = id;
-        this.uername = uername;
+        this.username = username;
         this.password = password;
     }
 
-    @Generated(hash = 586692638)
     public User() {
     }
 
@@ -41,8 +30,8 @@ public class User {
         return id;
     }
 
-    public String getUername() {
-        return uername;
+    public String getUsername() {
+        return username;
     }
 
     public String getPassword() {
@@ -53,8 +42,8 @@ public class User {
         this.password = password;
     }
 
-    public void setUername(String uername) {
-        this.uername = uername;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setId(long id) {

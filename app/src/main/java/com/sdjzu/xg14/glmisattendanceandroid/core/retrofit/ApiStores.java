@@ -18,11 +18,14 @@ public interface ApiStores {
     @POST("login.json")
     Observable<String> loadLoginData(@Body User user);
 
-    @POST("getEmployeeInfo.json")
+    @POST("getEmployees.json")
     Observable<String> loadEmployeeData();
 
-    @POST("addAttendance.json")
+    @POST("addAttendanceSummary.json")
     Observable<String> addAttendanceData(@Body AttendanceSummary AttendanceSummary);
+
+    @POST("updateAttendanceSummary.json")
+    Observable<String> updateAttendanceData(@Body AttendanceSummary AttendanceSummary);
 
 }
 

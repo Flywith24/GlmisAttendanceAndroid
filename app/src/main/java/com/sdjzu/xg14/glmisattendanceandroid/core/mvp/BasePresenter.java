@@ -23,7 +23,8 @@ public class BasePresenter<V> {
 
     public void attachView(V mvpView) {
         this.mvpView = mvpView;
-//        mApiStores = AppClient.retrofit().create(ApiStores.class);
+        //TODO
+        mApiStores = AppClient.retrofit().create(ApiStores.class);
     }
 
     public void detachView() {

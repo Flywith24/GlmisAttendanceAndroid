@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/widget_toobar"/>
+        <include layout="@layout/widget_toolbar"/>
 
         <Button
             android:id="@+id/add_attendance"

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/widget_toobar"/>
+    <include layout="@layout/widget_toolbar"/>
 
     <!--
     color:设置strip（线条）的颜色

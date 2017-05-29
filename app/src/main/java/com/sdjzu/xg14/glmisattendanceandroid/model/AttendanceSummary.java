@@ -8,7 +8,6 @@ import org.greenrobot.greendao.annotation.ToMany;
 
 import java.util.List;
 
-import static android.os.Build.VERSION_CODES.N;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.DaoException;
 import com.sdjzu.xg14.glmisattendanceandroid.greendao.DaoSession;

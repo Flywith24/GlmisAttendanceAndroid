@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.sdjzu.xg14.glmisattendanceandroid.core.mvp.BasePresenter;
 import com.sdjzu.xg14.glmisattendanceandroid.core.retrofit.ApiCallback;
 import com.sdjzu.xg14.glmisattendanceandroid.model.User;
+import com.sdjzu.xg14.glmisattendanceandroid.utils.L;
 
 /**
  * Created on 19/05/2017.
@@ -23,7 +24,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                 new ApiCallback<String>() {
                     @Override
                     public void onSuccess(String userStr) {
-                        mvpView.loginSucceed(user);
+                        mvpView.loginSucceed(userStr);
                     }
 
                     @Override
@@ -35,7 +36,6 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                     public void onFinish() {
                         mvpView.hideLoading();
                     }
-
                 });
     }
 

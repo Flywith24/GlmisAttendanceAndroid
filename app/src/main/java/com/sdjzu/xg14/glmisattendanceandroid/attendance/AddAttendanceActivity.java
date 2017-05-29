@@ -30,40 +30,40 @@ public class AddAttendanceActivity extends MvpActivity<AddAttendancePresenter> i
 
     @Override
     protected void setUpContentView() {
-        setContentView(R.layout.activity_add_attendance, R.string.add_attendance, MODE_BACK);
+        setContentView(R.layout.activity_add_attendance, R.string.app_name, MODE_BACK);
     }
 
     @Override
     protected void setUpView() {
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mTopNavigationTabStrip = (NavigationTabStrip) findViewById(R.id.nts_center);
-//        mViewPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager()));
-        mViewPager.setAdapter(new PagerAdapter() {
+
+        mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public int getCount() {
                 return 2;
             }
 
             @Override
-            public boolean isViewFromObject(final View view, final Object object) {
-                return view.equals(object);
-            }
+            public Fragment getItem(int position) {
+                switch (position) {
+                    case 0:
+                        if (null == mFragmentLeft) {
+                            mFragmentLeft = new AddAttendanceFragmentLeft();
+                        }
+                        return mFragmentLeft;
 
-            @Override
-            public void destroyItem(final View container, final int position, final Object object) {
-                ((ViewPager) container).removeView((View) object);
-            }
-
-            @Override
-            public Object instantiateItem(final ViewGroup container, final int position) {
-                final View view = new View(getBaseContext());
-                container.addView(view);
-                return view;
+                    case 1:
+                        if (null == mFragmentRight) {
+                            mFragmentRight = new AddAttendanceFragmentRight();
+                        }
+                        return mFragmentRight;
+                    default:
+                        return null;
+                }
             }
         });
-
-        mTopNavigationTabStrip.setViewPager(mViewPager, 1);
-
+        mTopNavigationTabStrip.setViewPager(mViewPager);
     }
 
     @Override
@@ -84,49 +84,6 @@ public class AddAttendanceActivity extends MvpActivity<AddAttendancePresenter> i
 
     @Override
     public void addAttendanceFailed(String msg) {
-
-    }
-
-    class MyFragmentPagerAdapter extends FragmentPagerAdapter {
-        public MyFragmentPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            switch (position) {
-                case 0:
-
-                    if (null == mFragmentLeft) {
-                        mFragmentLeft = new AddAttendanceFragmentLeft();
-                    }
-                    return mFragmentLeft;
-
-                case 1:
-                    if (null == mFragmentRight) {
-                        mFragmentRight = new AddAttendanceFragmentRight();
-                    }
-                    return mFragmentRight;
-                default:
-                    return null;
-            }
-        }
-
-        @Override
-        public int getCount() {
-            return 2;
-        }
-
-        @Override
-        public boolean isViewFromObject(final View view, final Object object) {
-            return view.equals(object);
-        }
-
-        @Override
-        public void destroyItem(final View container, final int position, final Object object) {
-            ((ViewPager) container).removeView((View) object);
-        }
-
 
     }
 }

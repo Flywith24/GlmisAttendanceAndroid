@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.sdjzu.xg14.glmisattendanceandroid">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:name=".core.MyApplication"
         android:allowBackup="true"
