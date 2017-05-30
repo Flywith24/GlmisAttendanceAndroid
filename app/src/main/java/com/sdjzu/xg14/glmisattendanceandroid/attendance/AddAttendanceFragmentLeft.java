@@ -26,9 +26,10 @@ import static com.sdjzu.xg14.glmisattendanceandroid.R.array.employees;
  * @version 1.0.0
  */
 
-public class AddAttendanceFragmentLeft extends MvpFragment<GetEmployeeInfoPresenter> implements IGetEmployeeInfoView {
+public class AddAttendanceFragmentLeft extends MvpFragment<GetEmployeeInfoPresenter> implements IGetEmployeeInfoView, AddAttendanceActivity.LeftListener {
     private RecyclerView recyclerView;
     private List<Employee> mEmployees;
+    private boolean isVisible;
 
     @Nullable
     @Override
@@ -42,6 +43,8 @@ public class AddAttendanceFragmentLeft extends MvpFragment<GetEmployeeInfoPresen
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.addItemDecoration(
                 new DividerItemDecoration(getActivity(), R.drawable.list_divider));
+        ((AddAttendanceActivity) getActivity()).setLeftListener(this);
+
     }
 
     @Override
@@ -53,7 +56,20 @@ public class AddAttendanceFragmentLeft extends MvpFragment<GetEmployeeInfoPresen
             employee.setName(employeeNames[i]);
             mEmployees.add(employee);
         }
-        recyclerView.setAdapter(new EmployeeAdapter(mEmployees));
+        final EmployeeAdapter adapter = new EmployeeAdapter(mEmployees);
+        recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new EmployeeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                adapter.removeData(position);
+            }
+        });
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        isVisible = isVisibleToUser;
     }
 
     @Override
@@ -72,4 +88,8 @@ public class AddAttendanceFragmentLeft extends MvpFragment<GetEmployeeInfoPresen
     }
 
 
+    @Override
+    public void onPageSelected(int position) {
+        L.d("left");
+    }
 }

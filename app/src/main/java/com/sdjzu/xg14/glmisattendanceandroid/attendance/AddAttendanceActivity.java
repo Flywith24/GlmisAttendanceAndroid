@@ -23,10 +23,31 @@ import com.sdjzu.xg14.glmisattendanceandroid.core.mvp.MvpActivity;
 
 public class AddAttendanceActivity extends MvpActivity<AddAttendancePresenter> implements IAddAttendanceView {
     private ViewPager mViewPager;
-
     private NavigationTabStrip mTopNavigationTabStrip;
     private AddAttendanceFragmentLeft mFragmentLeft;
     private AddAttendanceFragmentRight mFragmentRight;
+
+    private LeftListener mLeftListener;
+    private RightListener mRightListener;
+
+
+    //左侧界面被选择监听
+    public interface LeftListener {
+        void onPageSelected(int position);
+    }
+
+    //右侧界面被选择监听
+    public interface RightListener {
+        void onPageSelected(int position);
+    }
+
+    public void setLeftListener(LeftListener listener) {
+        mLeftListener = listener;
+    }
+
+    public void setRightListener(RightListener listener) {
+        mRightListener = listener;
+    }
 
     @Override
     protected void setUpContentView() {
@@ -61,6 +82,25 @@ public class AddAttendanceActivity extends MvpActivity<AddAttendancePresenter> i
                     default:
                         return null;
                 }
+            }
+        });
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 0) {
+                    mLeftListener.onPageSelected(position);
+                } else {
+                    mRightListener.onPageSelected(position);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
             }
         });
         mTopNavigationTabStrip.setViewPager(mViewPager);

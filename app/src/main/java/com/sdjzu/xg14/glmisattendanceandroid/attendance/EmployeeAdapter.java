@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sdjzu.xg14.glmisattendanceandroid.R;
 import com.sdjzu.xg14.glmisattendanceandroid.model.Employee;
@@ -21,6 +20,17 @@ import java.util.List;
 
 public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHolder> {
     private List<Employee> mEmployees;
+    private EmployeeAdapter.OnItemClickListener mOnItemClickListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+
+    }
+
+    public void setOnItemClickListener(EmployeeAdapter.OnItemClickListener mOnItemClickListener) {
+        this.mOnItemClickListener = mOnItemClickListener;
+    }
+
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         View mView;
@@ -42,15 +52,15 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHo
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_employee_item, parent, false);
         final ViewHolder holder = new ViewHolder(view);
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = holder.getAdapterPosition();
-                Employee employee = mEmployees.get(position);
-                Toast.makeText(v.getContext(), employee.getName(),
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+        if (mOnItemClickListener != null) {
+            holder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickListener.
+                            onItemClick(holder.mView, holder.getAdapterPosition());
+                }
+            });
+        }
         return holder;
     }
 
@@ -63,10 +73,6 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHo
     @Override
     public int getItemCount() {
         return mEmployees.size();
-    }
-
-    public void addData() {
-
     }
 
     /**
@@ -85,6 +91,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHo
     public void removeData(int position) {
         mEmployees.remove(position);
         notifyItemRemoved(position);
+        notifyDataSetChanged();
     }
 
 }

@@ -47,7 +47,7 @@ public class L {
     // 调用Log.d()方法打印日志
     public static void d(String msg) {
         if (LEVEL <= DEBUG) {
-            Log.d("", msg);
+            Log.d("yyz", msg);
         }
     }
 

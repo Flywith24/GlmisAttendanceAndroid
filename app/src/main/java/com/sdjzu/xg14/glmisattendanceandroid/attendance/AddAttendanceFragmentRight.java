@@ -20,7 +20,7 @@ import java.util.List;
  * @version 1.0.0
  */
 
-public class AddAttendanceFragmentRight extends MvpFragment<GetEmployeeInfoPresenter> implements IGetEmployeeInfoView {
+public class AddAttendanceFragmentRight extends MvpFragment<GetEmployeeInfoPresenter> implements IGetEmployeeInfoView ,AddAttendanceActivity.RightListener {
 
     @Nullable
     @Override
@@ -30,7 +30,9 @@ public class AddAttendanceFragmentRight extends MvpFragment<GetEmployeeInfoPrese
 
     @Override
     public void setUpView(View view) {
-        L.d("Right");
+
+        ((AddAttendanceActivity) getActivity()).setRightListener(this);
+
     }
 
     @Override
@@ -54,4 +56,8 @@ public class AddAttendanceFragmentRight extends MvpFragment<GetEmployeeInfoPrese
     }
 
 
+    @Override
+    public void onPageSelected(int position) {
+        L.d("right");
+    }
 }
