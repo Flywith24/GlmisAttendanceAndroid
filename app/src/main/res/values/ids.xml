@@ -11,4 +11,5 @@
     <item name="password_et" type="id"/>
     <item name="login_btn" type="id"/>
     <item name="viewpager" type="id"/>
+    <item name="employee_name" type="id"/>
 </resources>
