@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.idescout.sql.SqlScoutServer;
 import com.sdjzu.xg14.glmisattendanceandroid.HomeActivity;
 import com.sdjzu.xg14.glmisattendanceandroid.R;
 import com.sdjzu.xg14.glmisattendanceandroid.constants.ConstantValues;
@@ -37,6 +38,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SqlScoutServer.create(this, getPackageName());
         switch (AppStatusTracker.getInstance().getAppStatus()) {
             case ConstantValues.STATUS_FORCE_KILLED:
                 protectApp();
@@ -154,7 +156,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
     public ProgressDialog showProgressDialog() {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("加载中");
-        progressDialog.show();
+//        progressDialog.show();
         return progressDialog;
     }
 

@@ -5,9 +5,8 @@
     <string name="nav_welcome">欢迎您</string>
     <string name="add_attendance">新建考勤</string>
     <string name="wrong_name_password">用户名或密码错误</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="login_info">login_info</string>
 
 </resources>

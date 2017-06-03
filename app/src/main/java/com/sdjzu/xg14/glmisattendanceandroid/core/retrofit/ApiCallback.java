@@ -44,7 +44,6 @@ public abstract class ApiCallback<M> extends Subscriber<M> {
     @Override
     public void onNext(M model) {
         onSuccess(model);
-
     }
 
     @Override

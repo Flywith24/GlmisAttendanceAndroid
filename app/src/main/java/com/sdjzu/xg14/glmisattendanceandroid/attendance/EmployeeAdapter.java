@@ -9,7 +9,11 @@ import android.widget.TextView;
 import com.sdjzu.xg14.glmisattendanceandroid.R;
 import com.sdjzu.xg14.glmisattendanceandroid.model.Employee;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+
+import static com.sdjzu.xg14.glmisattendanceandroid.R.array.employees;
 
 /**
  * Created on 30/05/2017.
@@ -19,7 +23,7 @@ import java.util.List;
  */
 
 public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHolder> {
-    private List<Employee> mEmployees;
+    private List<Employee> mEmployees = new ArrayList<>();
     private EmployeeAdapter.OnItemClickListener mOnItemClickListener;
 
     public interface OnItemClickListener {
@@ -43,31 +47,37 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ViewHo
         }
     }
 
-    public EmployeeAdapter(List<Employee> employeeList) {
-        mEmployees = employeeList;
+    public EmployeeAdapter() {
     }
 
     @Override
-    public EmployeeAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_employee_item, parent, false);
-        final ViewHolder holder = new ViewHolder(view);
+    public EmployeeAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+
+        return new ViewHolder(LayoutInflater.from(viewGroup.getContext())
+                .inflate(R.layout.fragment_employee_item, viewGroup, false));
+    }
+
+    public void addList(Collection<? extends Employee> employeeList){
+        mEmployees.clear();
+        mEmployees.addAll(employeeList);
+        notifyDataSetChanged();
+
+
+    }
+
+    @Override
+    public void onBindViewHolder(final EmployeeAdapter.ViewHolder holder, final int position) {
+        Employee employee = mEmployees.get(position);
+        holder.employeeName.setText(employee.getName());
         if (mOnItemClickListener != null) {
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mOnItemClickListener.
-                            onItemClick(holder.mView, holder.getAdapterPosition());
+                            onItemClick(holder.mView, holder.getLayoutPosition());
                 }
             });
         }
-        return holder;
-    }
-
-    @Override
-    public void onBindViewHolder(EmployeeAdapter.ViewHolder holder, int position) {
-        Employee employee = mEmployees.get(position);
-        holder.employeeName.setText(employee.getName());
     }
 
     @Override

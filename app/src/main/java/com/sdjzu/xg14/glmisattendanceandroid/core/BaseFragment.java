@@ -35,24 +35,23 @@ public abstract class BaseFragment extends Fragment {
         isLazyLoadEnabled = true;
     }
 
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        L.e(toString() , ":onAttach");
+        L.e(toString(), ":onAttach");
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        L.e(toString() , ":onCreate");
+        L.e(toString(), ":onCreate");
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         this.isVisibleToUser = isVisibleToUser;
-        L.e(toString() , ":setUserVisibleHint:" + isVisibleToUser);
+        L.e(toString(), ":setUserVisibleHint:" + isVisibleToUser);
         checkIfLoadData();
     }
 
@@ -60,14 +59,14 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        L.e(toString() , ":onCreateView");
+        L.e(toString(), ":onCreateView");
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        L.e(toString() , ":onViewCreated");
+        L.e(toString(), ":onViewCreated");
         if (!isLazyLoadEnabled) {
             setUpView(view);
             setUpData();
@@ -92,86 +91,91 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        L.e(toString() , ":onActivityCreated");
+        L.e(toString(), ":onActivityCreated");
 
     }
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-        L.e(toString() , ":onViewStateRestored");
+        L.e(toString(), ":onViewStateRestored");
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         isViewInitialized = false;
-        L.e(toString() , ":onDestroyView");
+        L.e(toString(), ":onDestroyView");
     }
 
     private void checkIfLoadData() {
+        L.d("check"+isViewInitialized);
         if (isVisibleToUser && isViewInitialized && !isDataInitialized) {
             isDataInitialized = true;
 //            TODO load data
             setUpData();
+        } else if (isVisibleToUser && isViewInitialized && isDataInitialized) {
+            refresh();
         }
     }
+
+    protected abstract void refresh();
 
     @Override
     public void onStart() {
         super.onStart();
-        L.e(toString() , ":onStart");
+        L.e(toString(), ":onStart");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        L.e(toString() , ":onResume");
+        L.e(toString(), ":onResume");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        L.e(toString() , ":onPause");
+        L.e(toString(), ":onPause");
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        L.e(toString() , ":onSaveInstanceState");
+        L.e(toString(), ":onSaveInstanceState");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        L.e(toString() , ":onStop");
+        L.e(toString(), ":onStop");
     }
 
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        L.e(toString() , ":onDestroy");
+        L.e(toString(), ":onDestroy");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        L.e(toString() , ":onDetach");
+        L.e(toString(), ":onDetach");
     }
 
 
     @Override
     public void onInflate(Context context, AttributeSet attrs, Bundle savedInstanceState) {
         super.onInflate(context, attrs, savedInstanceState);
-        L.e(toString() , ":onInflate");
+        L.e(toString(), ":onInflate");
     }
 
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        L.e(toString() , ":onHiddenChanged:" + hidden);
+        L.e(toString(), ":onHiddenChanged:" + hidden);
     }
 
 

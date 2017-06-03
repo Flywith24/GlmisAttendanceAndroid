@@ -2,7 +2,10 @@ package com.sdjzu.xg14.glmisattendanceandroid.login;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -31,6 +34,12 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
     private Button mLogin;
     private String username;
     private String password;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
+        getLoginInfoFromSP();
+    }
 
 
     @Override
@@ -67,8 +76,7 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
         } else {
             L.d("yyz", username);
             L.d("yyz", password);
-//            mvpPresenter.loadLoginData(new User(username, password));
-            jumpToHomePage();
+            mvpPresenter.loadLoginData(new User(username, password));
         }
     }
 
@@ -92,11 +100,11 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
         if ("".equals(userStr)) {
             Toast.makeText(this, R.string.wrong_name_password, Toast.LENGTH_SHORT).show();
         } else {
+            saveLoginInfo();
             jumpToHomePage();
         }
 
     }
-
 
     @Override
     public void loginFailed(String msg) {
@@ -110,5 +118,30 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
         startActivity(new Intent(LoginActivity.this, HomeActivity.class));
         finish();
         AppStatusTracker.getInstance().setAppStatus(ConstantValues.STATUS_ONLINE);
+    }
+
+    /**
+     * 保存登录信息到SharePreferences中
+     */
+    private void saveLoginInfo() {
+        //将用户名密码存到Preferences,登录一次后就不需登录了
+        SharedPreferences.Editor editor = getSharedPreferences
+                (String.valueOf(R.string.login_info), MODE_PRIVATE).edit();
+        editor.putString(String.valueOf(R.string.username), username);
+        editor.putString(String.valueOf(R.string.password), password);
+        editor.apply();
+    }
+
+    /**
+     * 从SharePreferences中获取登录信息，有则跳转直接跳转到HomeActivity
+     */
+
+    private void getLoginInfoFromSP() {
+        SharedPreferences pref = getSharedPreferences(String.valueOf(R.string.login_info), MODE_PRIVATE);
+        String username = pref.getString(String.valueOf(R.string.username), null);
+        String password = pref.getString(String.valueOf(R.string.password), null);
+        if (username != null && password != null) {
+            jumpToHomePage();
+        }
     }
 }

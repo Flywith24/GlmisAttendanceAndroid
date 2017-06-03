@@ -11,13 +11,24 @@ import android.view.View;
 import android.widget.Button;
 
 import com.sdjzu.xg14.glmisattendanceandroid.attendance.AddAttendanceActivity;
-import com.sdjzu.xg14.glmisattendanceandroid.core.BaseActivity;
+import com.sdjzu.xg14.glmisattendanceandroid.attendance.GetEmployeeInfoPresenter;
+import com.sdjzu.xg14.glmisattendanceandroid.attendance.IGetEmployeeInfoView;
+import com.sdjzu.xg14.glmisattendanceandroid.core.MyApplication;
+import com.sdjzu.xg14.glmisattendanceandroid.core.mvp.MvpActivity;
+import com.sdjzu.xg14.glmisattendanceandroid.model.Employee;
+
+import java.util.List;
 
 
-public class HomeActivity extends BaseActivity implements View.OnClickListener {
+public class HomeActivity extends MvpActivity<GetEmployeeInfoPresenter> implements View.OnClickListener, IGetEmployeeInfoView {
 
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
+
+    @Override
+    protected GetEmployeeInfoPresenter createPresenter() {
+        return new GetEmployeeInfoPresenter(this);
+    }
 
     @Override
     protected void setUpContentView() {
@@ -41,8 +52,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void setUpData(Bundle savedInstanceState) {
-
+        mvpPresenter.loadEmployeeData();
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -56,6 +68,21 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        startActivity(new Intent(HomeActivity.this,AddAttendanceActivity.class));
+        startActivity(new Intent(HomeActivity.this, AddAttendanceActivity.class));
+    }
+
+    @Override
+    public void loadEmployeeInfoSucceed(List<Employee> employees) {
+        //每次加载先清空本地数据
+        MyApplication.getInstances().getDaoSession().getEmployeeDao().deleteAll();
+        for (Employee employee : employees) {
+            employee.setIsAttendant(false);
+            MyApplication.getInstances().getDaoSession().getEmployeeDao().insert(employee);
+        }
+    }
+
+    @Override
+    public void loadEmployeeInfoFailed(String msg) {
+
     }
 }

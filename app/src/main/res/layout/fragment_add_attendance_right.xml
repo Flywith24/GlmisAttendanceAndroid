@@ -5,17 +5,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="你大爷"
-        android:textSize="28dp"/>
-    <!--<android.support.v7.widget.RecyclerView-->
-    <!--android:id="@id/recycler_view"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:paddingLeft="10dp"-->
-    <!--android:paddingRight="10dp"-->
-    <!--android:scrollbars="none"/>-->
+        android:layout_height="match_parent"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:scrollbars="none"/>
 
 </RelativeLayout>

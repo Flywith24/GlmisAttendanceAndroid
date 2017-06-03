@@ -22,7 +22,7 @@
             android:name=".HomeActivity"
             android:launchMode="singleTask">
         </activity>
-        <activity android:name=".attendance.AddAttendanceActivity"></activity>
+        <activity android:name=".attendance.AddAttendanceActivity"/>
     </application>
 
 </manifest>
