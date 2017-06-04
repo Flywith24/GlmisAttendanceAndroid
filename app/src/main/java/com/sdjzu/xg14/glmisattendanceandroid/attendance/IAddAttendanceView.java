@@ -4,6 +4,7 @@ import com.sdjzu.xg14.glmisattendanceandroid.core.mvp.IBaseView;
 import com.sdjzu.xg14.glmisattendanceandroid.model.Employee;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created on 23/05/2017.
@@ -13,7 +14,7 @@ import java.util.List;
  */
 
 public interface IAddAttendanceView extends IBaseView {
-    void addAttendanceSucceed();
+    void addAttendanceSucceed(String str);
 
     void addAttendanceFailed(String msg);
 
