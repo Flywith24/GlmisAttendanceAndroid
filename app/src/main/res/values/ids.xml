@@ -11,4 +11,6 @@
     <item name="login_btn" type="id"/>
     <item name="viewpager" type="id"/>
     <item name="employee_name" type="id"/>
+    <item name="add_attendance" type="id"/>
+    <item name="update_attendance" type="id"/>
 </resources>

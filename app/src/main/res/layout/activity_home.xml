@@ -14,13 +14,13 @@
         <include layout="@layout/widget_toolbar"/>
 
         <Button
-            android:id="@+id/add_attendance"
+            android:id="@id/add_attendance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/add_attendance"/>
 
         <Button
-            android:id="@+id/update_attendance"
+            android:id="@id/update_attendance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/update_attendance"/>

@@ -9,7 +9,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.gigamole.library.navigationtabstrip.NavigationTabStrip;
 import com.sdjzu.xg14.glmisattendanceandroid.HomeActivity;
@@ -20,8 +19,11 @@ import com.sdjzu.xg14.glmisattendanceandroid.greendao.DaoSession;
 import com.sdjzu.xg14.glmisattendanceandroid.greendao.EmployeeDao;
 import com.sdjzu.xg14.glmisattendanceandroid.model.AttendanceSummary;
 import com.sdjzu.xg14.glmisattendanceandroid.model.Employee;
+import com.sdjzu.xg14.glmisattendanceandroid.utils.T;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -70,10 +72,12 @@ public class AddAttendanceActivity extends MvpActivity<AddAttendancePresenter> i
             mSummary.setId(Long.parseLong(str));
             mSummary.setAttendanceManager("yyz");
             MyApplication.getInstances().getDaoSession().getAttendanceSummaryDao().insert(mSummary);
+            T.showToast(this,"提交成功");
             startActivity(new Intent(AddAttendanceActivity.this, HomeActivity.class));
             finish();
+
         } else {
-            Toast.makeText(this, "提交失败，请重新提交", Toast.LENGTH_SHORT).show();
+            T.showToast(this, "提交失败，请重新提交");
         }
     }
 
@@ -95,16 +99,23 @@ public class AddAttendanceActivity extends MvpActivity<AddAttendancePresenter> i
             case R.id.action_commit:
                 DaoSession daoSession = MyApplication.getInstances().getDaoSession();
                 daoSession.getAttendanceSummaryDao().deleteAll();
+
                 mSummary = new AttendanceSummary();
-                mSummary.setAttendanceName("第二次");
-                mSummary.setAttendanceTime("2017-06-03");
-                List<Employee> employees = daoSession.getEmployeeDao().queryBuilder().where(EmployeeDao.Properties.IsAttendant.eq(false)).list();
+                mSummary.setAttendanceName(
+                        getIntent().getStringExtra("attendance_name"));//设置考勤名称
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                mSummary.setAttendanceTime(formatter.format(
+                        new Date(System.currentTimeMillis())));//设置当前日期
+
+                List<Employee> employees = daoSession.getEmployeeDao().queryBuilder()
+                        .where(EmployeeDao.Properties.IsAttendant.eq(false)).list();
                 List<Long> employeeIds = new ArrayList<>();
                 for (Employee employee : employees) {
                     employeeIds.add(employee.getId());
                 }
                 mSummary.setEmployeeIds(employeeIds);
                 mvpPresenter.addAttendanceData(mSummary);
+
                 break;
         }
         return super.onOptionsItemSelected(item);

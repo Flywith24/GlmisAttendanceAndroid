@@ -20,6 +20,7 @@ import com.sdjzu.xg14.glmisattendanceandroid.core.AppStatusTracker;
 import com.sdjzu.xg14.glmisattendanceandroid.core.mvp.MvpActivity;
 import com.sdjzu.xg14.glmisattendanceandroid.model.User;
 import com.sdjzu.xg14.glmisattendanceandroid.utils.L;
+import com.sdjzu.xg14.glmisattendanceandroid.utils.T;
 
 /**
  * Created on 19/05/2017.
@@ -72,7 +73,7 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
         username = mUsername.getText().toString().trim();
         password = mPassword.getText().toString().trim();
         if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
-            Toast.makeText(this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
+            T.showToast(this, "用户名或密码不能为空");
         } else {
             L.d("yyz", username);
             L.d("yyz", password);
@@ -98,7 +99,7 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
     @Override
     public void loginSucceed(String userStr) {
         if ("".equals(userStr)) {
-            Toast.makeText(this, R.string.wrong_name_password, Toast.LENGTH_SHORT).show();
+            T.showToast(this, R.string.wrong_name_password);
         } else {
             saveLoginInfo();
             jumpToHomePage();

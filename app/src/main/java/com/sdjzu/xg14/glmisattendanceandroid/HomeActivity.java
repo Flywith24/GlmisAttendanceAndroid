@@ -16,6 +16,7 @@ import com.sdjzu.xg14.glmisattendanceandroid.attendance.IGetEmployeeInfoView;
 import com.sdjzu.xg14.glmisattendanceandroid.core.MyApplication;
 import com.sdjzu.xg14.glmisattendanceandroid.core.mvp.MvpActivity;
 import com.sdjzu.xg14.glmisattendanceandroid.model.Employee;
+import com.sdjzu.xg14.glmisattendanceandroid.widgets.MyDialog;
 
 import java.util.List;
 
@@ -68,7 +69,17 @@ public class HomeActivity extends MvpActivity<GetEmployeeInfoPresenter> implemen
 
     @Override
     public void onClick(View v) {
-        startActivity(new Intent(HomeActivity.this, AddAttendanceActivity.class));
+        switch (v.getId()) {
+            case R.id.add_attendance:
+                MyDialog dialog = new MyDialog(this, "新建考勤");
+                dialog.showDialog();
+
+                break;
+            case R.id.update_attendance:
+                //TODO
+
+                break;
+        }
     }
 
     @Override
