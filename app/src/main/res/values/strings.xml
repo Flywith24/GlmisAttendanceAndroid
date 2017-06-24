@@ -10,4 +10,6 @@
     <string name="password">password</string>
     <string name="login_info">login_info</string>
     <string name="action_commit">提交</string>
+    <string name="action_update">更新</string>
+    <string name="action_collapse">折叠</string>
 </resources>

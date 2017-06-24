@@ -1,24 +1,45 @@
-package com.sdjzu.xg14.glmisattendanceandroid.attendance;
+package com.sdjzu.xg14.glmisattendanceandroid.addAttendance;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sdjzu.xg14.glmisattendanceandroid.core.mvp.BasePresenter;
 import com.sdjzu.xg14.glmisattendanceandroid.core.retrofit.ApiCallback;
+import com.sdjzu.xg14.glmisattendanceandroid.model.AttendanceSummary;
 import com.sdjzu.xg14.glmisattendanceandroid.model.Employee;
 
 import java.util.List;
 
 /**
- * Created on 24/05/2017.
+ * Created on 23/05/2017.
  *
  * @author YYZ
  * @version 1.0.0
  */
 
-public class GetEmployeeInfoPresenter extends BasePresenter<IGetEmployeeInfoView> {
-
-    public GetEmployeeInfoPresenter(IGetEmployeeInfoView view) {
+public class AddAttendancePresenter extends BasePresenter<IAddAttendanceView> {
+    public AddAttendancePresenter(IAddAttendanceView view) {
         attachView(view);
+    }
+
+    public void addAttendanceData(AttendanceSummary summary) {
+        String a = summary.toString();
+        mvpView.showLoading();
+        addSubscription(mApiStores.addAttendanceData(summary), new ApiCallback<String>() {
+            @Override
+            public void onSuccess(String str) {
+                mvpView.addAttendanceSucceed(str);
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                mvpView.addAttendanceFailed(msg);
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        });
     }
 
     public void loadEmployeeData() {
@@ -50,4 +71,5 @@ public class GetEmployeeInfoPresenter extends BasePresenter<IGetEmployeeInfoView
         }.getType());
         return employees;
     }
+
 }

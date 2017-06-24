@@ -10,26 +10,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.sdjzu.xg14.glmisattendanceandroid.attendance.AddAttendanceActivity;
-import com.sdjzu.xg14.glmisattendanceandroid.attendance.GetEmployeeInfoPresenter;
-import com.sdjzu.xg14.glmisattendanceandroid.attendance.IGetEmployeeInfoView;
-import com.sdjzu.xg14.glmisattendanceandroid.core.MyApplication;
-import com.sdjzu.xg14.glmisattendanceandroid.core.mvp.MvpActivity;
-import com.sdjzu.xg14.glmisattendanceandroid.model.Employee;
+import com.sdjzu.xg14.glmisattendanceandroid.core.BaseActivity;
+import com.sdjzu.xg14.glmisattendanceandroid.updateAttendance.UpdateAttendanceActivity;
 import com.sdjzu.xg14.glmisattendanceandroid.widgets.MyDialog;
 
-import java.util.List;
 
 
-public class HomeActivity extends MvpActivity<GetEmployeeInfoPresenter> implements View.OnClickListener, IGetEmployeeInfoView {
+
+public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
 
-    @Override
-    protected GetEmployeeInfoPresenter createPresenter() {
-        return new GetEmployeeInfoPresenter(this);
-    }
 
     @Override
     protected void setUpContentView() {
@@ -49,11 +41,12 @@ public class HomeActivity extends MvpActivity<GetEmployeeInfoPresenter> implemen
         });
         Button addAttendance = (Button) findViewById(R.id.add_attendance);
         addAttendance.setOnClickListener(this);
+        Button updateAttendance = (Button) findViewById(R.id.update_attendance);
+        updateAttendance.setOnClickListener(this);
     }
 
     @Override
     protected void setUpData(Bundle savedInstanceState) {
-        mvpPresenter.loadEmployeeData();
     }
 
 
@@ -77,23 +70,12 @@ public class HomeActivity extends MvpActivity<GetEmployeeInfoPresenter> implemen
                 break;
             case R.id.update_attendance:
                 //TODO
-
+                Intent intent = new Intent(HomeActivity.this, UpdateAttendanceActivity.class);
+                //获取从AttendanceActivity传来的summaryId并存入intent中，以便传递给UpdateAttendanceActivity
+                intent.putExtra("summaryId", getIntent().getLongExtra("summaryId", -1));
+                startActivity(intent);
                 break;
         }
     }
 
-    @Override
-    public void loadEmployeeInfoSucceed(List<Employee> employees) {
-        //每次加载先清空本地数据
-        MyApplication.getInstances().getDaoSession().getEmployeeDao().deleteAll();
-        for (Employee employee : employees) {
-            employee.setIsAttendant(false);
-            MyApplication.getInstances().getDaoSession().getEmployeeDao().insert(employee);
-        }
-    }
-
-    @Override
-    public void loadEmployeeInfoFailed(String msg) {
-
-    }
 }

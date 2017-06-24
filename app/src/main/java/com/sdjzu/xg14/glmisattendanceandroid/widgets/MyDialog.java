@@ -13,14 +13,10 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.sdjzu.xg14.glmisattendanceandroid.HomeActivity;
 import com.sdjzu.xg14.glmisattendanceandroid.R;
-import com.sdjzu.xg14.glmisattendanceandroid.attendance.AddAttendanceActivity;
+import com.sdjzu.xg14.glmisattendanceandroid.addAttendance.AddAttendanceActivity;
 import com.sdjzu.xg14.glmisattendanceandroid.utils.T;
-
-import static com.sdjzu.xg14.glmisattendanceandroid.R.id.tv_cancel;
 
 /**
  * 自定义退出弹出框

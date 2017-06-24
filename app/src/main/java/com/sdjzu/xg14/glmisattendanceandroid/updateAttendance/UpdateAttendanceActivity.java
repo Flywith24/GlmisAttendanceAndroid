@@ -1,18 +1,17 @@
-package com.sdjzu.xg14.glmisattendanceandroid.attendance;
+package com.sdjzu.xg14.glmisattendanceandroid.updateAttendance;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.gigamole.library.navigationtabstrip.NavigationTabStrip;
-import com.sdjzu.xg14.glmisattendanceandroid.HomeActivity;
 import com.sdjzu.xg14.glmisattendanceandroid.R;
+import com.sdjzu.xg14.glmisattendanceandroid.addAttendance.AttendanceFragmentLeft;
+import com.sdjzu.xg14.glmisattendanceandroid.addAttendance.AttendanceFragmentRight;
 import com.sdjzu.xg14.glmisattendanceandroid.core.MyApplication;
 import com.sdjzu.xg14.glmisattendanceandroid.core.mvp.MvpActivity;
 import com.sdjzu.xg14.glmisattendanceandroid.greendao.DaoSession;
@@ -26,24 +25,30 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.sdjzu.xg14.glmisattendanceandroid.R.array.employees;
+
 
 /**
- * Created on 23/05/2017.
+ * Created on 06/06/2017.
  *
  * @author YYZ
  * @version 1.0.0
  */
 
-public class AddAttendanceActivity extends MvpActivity<AddAttendancePresenter> implements IAddAttendanceView {
+public class UpdateAttendanceActivity extends MvpActivity<UpdateAttendancePresenter> implements IUpdateAttendanceView {
     private ViewPager mViewPager;
     private NavigationTabStrip mTopNavigationTabStrip;
-    private AddAttendanceFragmentLeft mFragmentLeft;
-    private AddAttendanceFragmentRight mFragmentRight;
-    private AttendanceSummary mSummary;
+    private AttendanceFragmentLeft mFragmentLeft;
+    private AttendanceFragmentRight mFragmentRight;
 
     @Override
     protected void setUpContentView() {
         setContentView(R.layout.activity_add_attendance, R.string.app_name, MODE_BACK);
+    }
+
+    @Override
+    protected UpdateAttendancePresenter createPresenter() {
+        return new UpdateAttendancePresenter(this);
     }
 
     @Override
@@ -60,35 +65,9 @@ public class AddAttendanceActivity extends MvpActivity<AddAttendancePresenter> i
         super.setUpData(savedInstanceState);
     }
 
-    @Override
-    protected AddAttendancePresenter createPresenter() {
-        return new AddAttendancePresenter(this);
-    }
 
-
-    @Override
-    public void addAttendanceSucceed(String str) {
-        if (!"".equals(str)) {
-            mSummary.setId(Long.parseLong(str));
-            mSummary.setAttendanceManager("yyz");
-            MyApplication.getInstances().getDaoSession().getAttendanceSummaryDao().insert(mSummary);
-            T.showToast(this,"提交成功");
-            startActivity(new Intent(AddAttendanceActivity.this, HomeActivity.class));
-            finish();
-
-        } else {
-            T.showToast(this, "提交失败，请重新提交");
-        }
-    }
-
-    @Override
-    public void addAttendanceFailed(String msg) {
-
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar, menu);
+        getMenuInflater().inflate(R.menu.tbar_update, menu);
         return true;
     }
 
@@ -96,29 +75,36 @@ public class AddAttendanceActivity extends MvpActivity<AddAttendancePresenter> i
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.action_commit:
+            case R.id.action_update:
                 DaoSession daoSession = MyApplication.getInstances().getDaoSession();
-                daoSession.getAttendanceSummaryDao().deleteAll();
-
-                mSummary = new AttendanceSummary();
-                mSummary.setAttendanceName(
-                        getIntent().getStringExtra("attendance_name"));//设置考勤名称
-                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                mSummary.setAttendanceTime(formatter.format(
-                        new Date(System.currentTimeMillis())));//设置当前日期
-
+                //根据id获取summary
+                AttendanceSummary summary = null;
+                List<AttendanceSummary> summaries = daoSession.getAttendanceSummaryDao().loadAll();
+                for (AttendanceSummary attendanceSummary : summaries) {
+                    summary = attendanceSummary;
+                }
                 List<Employee> employees = daoSession.getEmployeeDao().queryBuilder()
                         .where(EmployeeDao.Properties.IsAttendant.eq(false)).list();
                 List<Long> employeeIds = new ArrayList<>();
                 for (Employee employee : employees) {
                     employeeIds.add(employee.getId());
                 }
-                mSummary.setEmployeeIds(employeeIds);
-                mvpPresenter.addAttendanceData(mSummary);
-
+                summary.setEmployeeIds(employeeIds);
+                mvpPresenter.updateAttendanceData(summary);
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void updateAttendanceSucceed(String str) {
+
+    }
+
+    @Override
+    public void updateAttendanceFailed(String msg) {
+
+        T.showToast(this,msg);
     }
 
     private class myPagerAdapter extends FragmentPagerAdapter {
@@ -133,13 +119,13 @@ public class AddAttendanceActivity extends MvpActivity<AddAttendancePresenter> i
                 case 0:
 
                     if (null == mFragmentLeft) {
-                        mFragmentLeft = new AddAttendanceFragmentLeft();
+                        mFragmentLeft = new AttendanceFragmentLeft();
                     }
                     return mFragmentLeft;
 
                 case 1:
                     if (null == mFragmentRight) {
-                        mFragmentRight = new AddAttendanceFragmentRight();
+                        mFragmentRight = new AttendanceFragmentRight();
                     }
                     return mFragmentRight;
                 default:

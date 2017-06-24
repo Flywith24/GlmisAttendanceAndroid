@@ -22,13 +22,13 @@ public interface ApiStores {
     Observable<String> loadEmployeeData();
 
     @POST("getAbsenceEmployeeIds.json")
-    Observable<String> loadAbsenceEmployeeIds();
+    Observable<String> loadAbsenceEmployeeIds(long summaryId);
 
     @POST("addAttendanceSummary.json")
-    Observable<String> addAttendanceData(@Body AttendanceSummary AttendanceSummary);
+    Observable<String> addAttendanceData(@Body AttendanceSummary attendanceSummary);
 
     @POST("updateAttendanceSummary.json")
-    Observable<String> updateAttendanceData(@Body AttendanceSummary AttendanceSummary);
+    Observable<String> updateAttendanceData(@Body AttendanceSummary attendanceSummary);
 
 }
 

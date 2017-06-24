@@ -55,4 +55,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     compile 'com.idescout.sql:sqlscout-server:2.0'
+
+    compile 'org.zakariya.stickyheaders:stickyheaders:0.7.6'
 }

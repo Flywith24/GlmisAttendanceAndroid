@@ -33,5 +33,9 @@
     <color name="tab_green">#ff45c01a</color>
     <color name="widgets_general_tab_pressed">#0db35e</color>
     <color name="widgets_general_tab_normal">#aaa</color>
+    <color name="actionButton">#bbbbbb</color>
+    <color name="divider">#dddddd</color>
+    <color name="headerBackground">#eeeeee</color>
+
 
 </resources>
