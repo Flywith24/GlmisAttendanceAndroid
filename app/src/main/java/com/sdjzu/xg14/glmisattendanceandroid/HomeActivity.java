@@ -6,22 +6,23 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
+import com.sdjzu.xg14.glmisattendanceandroid.addAttendance.AddAttendanceActivity;
 import com.sdjzu.xg14.glmisattendanceandroid.core.BaseActivity;
 import com.sdjzu.xg14.glmisattendanceandroid.updateAttendance.UpdateAttendanceActivity;
-import com.sdjzu.xg14.glmisattendanceandroid.widgets.MyDialog;
-
-
-
+import com.sdjzu.xg14.glmisattendanceandroid.utils.T;
 
 public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
-
 
     @Override
     protected void setUpContentView() {
@@ -49,7 +50,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     protected void setUpData(Bundle savedInstanceState) {
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -60,13 +60,44 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         return true;
     }
 
+    /**
+     * 显示输入考勤名称的dialog
+     */
+    private void showDialog() {
+        LayoutInflater inflater = getLayoutInflater();
+        View view = inflater.inflate(R.layout.widget_my_dialog, (ViewGroup) findViewById(R.id.dialog));
+        final EditText et_name = (EditText) view.findViewById(R.id.et);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setMessage("请输入考勤名称")
+                .setNegativeButton("取消", null)
+                .setPositiveButton("确定", null)
+                .setView(view);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+        if (dialog.getButton(AlertDialog.BUTTON_POSITIVE) != null) {
+
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if ("".equals(et_name.getText().toString())) {
+                        T.showToast(HomeActivity.this, "考勤名称不能为空");
+                    } else {
+                        dialog.dismiss();
+                        Intent intent = new Intent(HomeActivity.this, AddAttendanceActivity.class);
+                        intent.putExtra("attendance_name", et_name.getText().toString());
+                        HomeActivity.this.startActivity(intent);
+                    }
+                }
+            });
+
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.add_attendance:
-                MyDialog dialog = new MyDialog(this, "新建考勤");
-                dialog.showDialog();
-
+                showDialog();
                 break;
             case R.id.update_attendance:
                 //TODO

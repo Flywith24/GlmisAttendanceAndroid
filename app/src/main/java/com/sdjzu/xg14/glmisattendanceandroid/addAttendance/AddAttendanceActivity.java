@@ -7,8 +7,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.gigamole.library.navigationtabstrip.NavigationTabStrip;
 import com.sdjzu.xg14.glmisattendanceandroid.HomeActivity;
@@ -140,6 +145,7 @@ public class AddAttendanceActivity extends MvpActivity<AddAttendancePresenter> i
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     private class myPagerAdapter extends FragmentPagerAdapter {
 
