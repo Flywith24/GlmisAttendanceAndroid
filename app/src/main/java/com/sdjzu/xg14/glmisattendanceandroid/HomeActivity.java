@@ -44,7 +44,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 } else if (id == R.id.nav_logout) {
                     confirmDialog();
                 } else if (id == R.id.nav_about) {
-                    T.showToast(HomeActivity.this, "关于软件");
+                    aboutDialog();
                 }
                 mDrawerLayout.closeDrawers();
                 return false;
@@ -55,6 +55,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         Button updateAttendance = (Button) findViewById(R.id.update_attendance);
         updateAttendance.setOnClickListener(this);
     }
+
 
 
     @Override
@@ -72,6 +73,19 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         return true;
     }
 
+    /**
+     * 关于我们对话框
+     */
+    private void aboutDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle("关于我们:")
+                .setMessage("信管开发团队");
+        builder.show();
+    }
+
+    /**
+     * 确定退出登录对话框
+     */
     private void confirmDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setTitle("确定退出登录？")
