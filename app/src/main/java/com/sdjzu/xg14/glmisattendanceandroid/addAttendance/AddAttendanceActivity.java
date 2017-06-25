@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.gigamole.library.navigationtabstrip.NavigationTabStrip;
 import com.sdjzu.xg14.glmisattendanceandroid.HomeActivity;
@@ -141,6 +142,9 @@ public class AddAttendanceActivity extends MvpActivity<AddAttendancePresenter> i
                 }
                 mSummary.setEmployeeIds(employeeIds);
                 mvpPresenter.addAttendanceData(mSummary);
+                break;
+            case android.R.id.home:
+                onBackPressed();
                 break;
         }
         return super.onOptionsItemSelected(item);

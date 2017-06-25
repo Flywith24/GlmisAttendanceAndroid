@@ -22,7 +22,6 @@ public class AddAttendancePresenter extends BasePresenter<IAddAttendanceView> {
     }
 
     public void addAttendanceData(AttendanceSummary summary) {
-        String a = summary.toString();
         mvpView.showLoading();
         addSubscription(mApiStores.addAttendanceData(summary), new ApiCallback<String>() {
             @Override

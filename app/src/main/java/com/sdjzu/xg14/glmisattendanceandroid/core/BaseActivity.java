@@ -14,6 +14,7 @@ import com.idescout.sql.SqlScoutServer;
 import com.sdjzu.xg14.glmisattendanceandroid.HomeActivity;
 import com.sdjzu.xg14.glmisattendanceandroid.R;
 import com.sdjzu.xg14.glmisattendanceandroid.constants.ConstantValues;
+import com.sdjzu.xg14.glmisattendanceandroid.utils.ActivityCollector;
 import com.sdjzu.xg14.glmisattendanceandroid.utils.L;
 
 
@@ -39,6 +40,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SqlScoutServer.create(this, getPackageName());
+        ActivityCollector.addActivity(this);
         switch (AppStatusTracker.getInstance().getAppStatus()) {
             case ConstantValues.STATUS_FORCE_KILLED:
                 protectApp();
@@ -151,6 +153,12 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
             L.d(TAG, "need to show gesture");
         }
         super.onStart();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
     }
 
     public ProgressDialog showProgressDialog() {

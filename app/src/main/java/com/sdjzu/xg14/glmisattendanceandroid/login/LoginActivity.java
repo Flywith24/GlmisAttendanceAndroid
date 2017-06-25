@@ -78,7 +78,7 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
             L.d("yyz", username);
             L.d("yyz", password);
             jumpToHomePage();
-//            mvpPresenter.loadLoginData(new User(username, password));
+            mvpPresenter.loadLoginData(new User(username, password));
         }
     }
 

@@ -1,5 +1,6 @@
 package com.sdjzu.xg14.glmisattendanceandroid;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,10 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-
 import com.sdjzu.xg14.glmisattendanceandroid.addAttendance.AddAttendanceActivity;
 import com.sdjzu.xg14.glmisattendanceandroid.core.BaseActivity;
+import com.sdjzu.xg14.glmisattendanceandroid.login.LoginActivity;
 import com.sdjzu.xg14.glmisattendanceandroid.updateAttendance.UpdateAttendanceActivity;
+import com.sdjzu.xg14.glmisattendanceandroid.utils.ActivityCollector;
 import com.sdjzu.xg14.glmisattendanceandroid.utils.T;
 
 public class HomeActivity extends BaseActivity implements View.OnClickListener {
@@ -36,8 +38,16 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                if (id == R.id.nav_info) {
+                    T.showToast(HomeActivity.this, "我的信息");
+                } else if (id == R.id.nav_logout) {
+                    confirmDialog();
+                } else if (id == R.id.nav_about) {
+                    T.showToast(HomeActivity.this, "关于软件");
+                }
                 mDrawerLayout.closeDrawers();
-                return true;
+                return false;
             }
         });
         Button addAttendance = (Button) findViewById(R.id.add_attendance);
@@ -46,9 +56,11 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         updateAttendance.setOnClickListener(this);
     }
 
+
     @Override
     protected void setUpData(Bundle savedInstanceState) {
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -58,6 +70,20 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                 break;
         }
         return true;
+    }
+
+    private void confirmDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle("确定退出登录？")
+                .setNegativeButton("取消", null)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ActivityCollector.finishAll();
+                        startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                    }
+                });
+        builder.show();
     }
 
     /**

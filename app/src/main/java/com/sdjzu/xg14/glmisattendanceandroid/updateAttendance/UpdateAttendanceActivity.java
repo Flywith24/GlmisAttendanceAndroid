@@ -92,6 +92,9 @@ public class UpdateAttendanceActivity extends MvpActivity<UpdateAttendancePresen
                 summary.setEmployeeIds(employeeIds);
                 mvpPresenter.updateAttendanceData(summary);
                 break;
+            case android.R.id.home:
+                onBackPressed();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -104,7 +107,7 @@ public class UpdateAttendanceActivity extends MvpActivity<UpdateAttendancePresen
     @Override
     public void updateAttendanceFailed(String msg) {
 
-        T.showToast(this,msg);
+        T.showToast(this, msg);
     }
 
     private class myPagerAdapter extends FragmentPagerAdapter {
@@ -117,12 +120,10 @@ public class UpdateAttendanceActivity extends MvpActivity<UpdateAttendancePresen
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-
                     if (null == mFragmentLeft) {
                         mFragmentLeft = new AttendanceFragmentLeft();
                     }
                     return mFragmentLeft;
-
                 case 1:
                     if (null == mFragmentRight) {
                         mFragmentRight = new AttendanceFragmentRight();
