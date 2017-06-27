@@ -25,7 +25,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
-
     @Override
     protected void setUpContentView() {
         setContentView(R.layout.activity_home, R.string.app_name, MODE_DRAWER);

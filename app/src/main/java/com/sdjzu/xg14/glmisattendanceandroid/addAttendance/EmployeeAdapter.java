@@ -63,8 +63,6 @@ public class EmployeeAdapter extends SectioningAdapter {
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.d("yyz", textView.getText().toString());
-                        Log.d("yyz", "" + getSection() + "/" + getPositionInSection());
                         mOnItemClickListener.
                                 onItemClick(view, textView.getText().toString());
                         remove(getSection(), getPositionInSection());
@@ -127,7 +125,6 @@ public class EmployeeAdapter extends SectioningAdapter {
      * @param departments
      */
     private void createPositions(List<String> departments) {
-        Log.d("yyz", "createPositions: " + departments);
         for (int i = 0; i < departments.size(); i++) {
             int position = getPositionForSection(departments.get(i));
             if (position != -1) {
@@ -250,6 +247,11 @@ public class EmployeeAdapter extends SectioningAdapter {
         hvh.updateSectionCollapseToggle(isSectionCollapsed(sectionIndex));
     }
 
+    /**
+     * 绑定数据源
+     * @param employees
+     * @param departments
+     */
     public void addList(List<Employee> employees, List<String> departments) {
         mEmployees.clear();
         mEmployees.addAll(employees);

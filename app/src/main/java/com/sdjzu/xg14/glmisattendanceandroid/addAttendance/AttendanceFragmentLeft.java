@@ -77,7 +77,6 @@ public class AttendanceFragmentLeft extends BaseFragment {
         adapter.setOnItemClickListener(new EmployeeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, String name) {
-                Log.d("yyz", "onItemClick: 点了吗");
                 Employee employee = MyApplication.getInstances().getDaoSession().getEmployeeDao().queryBuilder()
                         .where(EmployeeDao.Properties.Name.eq(name)).unique();
                 employee.setIsAttendant(true);
