@@ -1,8 +1,13 @@
 package com.sdjzu.xg14.glmisattendanceandroid.login;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.sdjzu.xg14.glmisattendanceandroid.core.mvp.BasePresenter;
 import com.sdjzu.xg14.glmisattendanceandroid.core.retrofit.ApiCallback;
+import com.sdjzu.xg14.glmisattendanceandroid.model.Employee;
 import com.sdjzu.xg14.glmisattendanceandroid.model.User;
+
+import java.util.List;
 
 /**
  * Created on 19/05/2017.
@@ -22,7 +27,7 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                 new ApiCallback<String>() {
                     @Override
                     public void onSuccess(String userStr) {
-                        mvpView.loginSucceed(userStr);
+                        mvpView.loginSucceed(handleData(userStr));
                     }
 
                     @Override
@@ -35,6 +40,14 @@ public class LoginPresenter extends BasePresenter<LoginView> {
                         mvpView.hideLoading();
                     }
                 });
+    }
+
+    private Employee handleData(String model) {
+        //解析数据
+        Gson gson = new Gson();
+        Employee employee = gson.fromJson(model, new TypeToken<Employee>() {
+        }.getType());
+        return employee;
     }
 
 }

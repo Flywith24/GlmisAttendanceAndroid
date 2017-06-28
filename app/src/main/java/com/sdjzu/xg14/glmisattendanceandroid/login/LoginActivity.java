@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -18,9 +19,12 @@ import com.sdjzu.xg14.glmisattendanceandroid.R;
 import com.sdjzu.xg14.glmisattendanceandroid.constants.ConstantValues;
 import com.sdjzu.xg14.glmisattendanceandroid.core.AppStatusTracker;
 import com.sdjzu.xg14.glmisattendanceandroid.core.mvp.MvpActivity;
+import com.sdjzu.xg14.glmisattendanceandroid.model.Employee;
 import com.sdjzu.xg14.glmisattendanceandroid.model.User;
 import com.sdjzu.xg14.glmisattendanceandroid.utils.L;
 import com.sdjzu.xg14.glmisattendanceandroid.utils.T;
+
+import org.jsoup.select.Evaluator;
 
 /**
  * Created on 19/05/2017.
@@ -35,13 +39,13 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
     private Button mLogin;
     private String username;
     private String password;
+    private static final String TAG = "LoginActivity";
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         getLoginInfoFromSP();
     }
-
 
     @Override
     protected void setUpContentView() {
@@ -77,7 +81,6 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
         } else {
             L.d("yyz", username);
             L.d("yyz", password);
-//            jumpToHomePage();
             mvpPresenter.loadLoginData(new User(username, password));
         }
     }
@@ -95,15 +98,15 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
     /**
      * 从服务器成功返回数据，无论用户名或密码是否正确只要成功通信都会调用此方法，密码是否正确的逻辑写在这里
      *
-     * @param userStr 从服务器返回的json数据
+     * @param employee 从服务器返回的json数据
      */
     @Override
-    public void loginSucceed(String userStr) {
-        if ("".equals(userStr)) {
+    public void loginSucceed(Employee employee) {
+        if ("".equals(employee)) {
             T.showToast(this, R.string.wrong_name_password);
         } else {
             saveLoginInfo();
-            jumpToHomePage();
+            jumpToHomePage(employee);
         }
 
     }
@@ -116,8 +119,20 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
     /**
      * 跳转到主页
      */
+    private void jumpToHomePage(Employee employee) {
+        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+        intent.putExtra("employeeInfo", employee.getName());
+        startActivity(intent);
+        finish();
+        AppStatusTracker.getInstance().setAppStatus(ConstantValues.STATUS_ONLINE);
+    }
+
+    /**
+     * 跳转到主页
+     */
     private void jumpToHomePage() {
-        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+        startActivity(intent);
         finish();
         AppStatusTracker.getInstance().setAppStatus(ConstantValues.STATUS_ONLINE);
     }
@@ -129,8 +144,8 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
         //将用户名密码存到Preferences,登录一次后就不需登录了
         SharedPreferences.Editor editor = getSharedPreferences
                 (String.valueOf(R.string.login_info), MODE_PRIVATE).edit();
-        editor.putString(String.valueOf(R.string.username), username);
-        editor.putString(String.valueOf(R.string.password), password);
+        editor.putString("username", username);
+        editor.putString("password", password);
         editor.apply();
     }
 
@@ -140,8 +155,8 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
 
     private void getLoginInfoFromSP() {
         SharedPreferences pref = getSharedPreferences(String.valueOf(R.string.login_info), MODE_PRIVATE);
-        String username = pref.getString(String.valueOf(R.string.username), null);
-        String password = pref.getString(String.valueOf(R.string.password), null);
+        String username = pref.getString("username", null);
+        String password = pref.getString("password", null);
         if (username != null && password != null) {
             jumpToHomePage();
         }

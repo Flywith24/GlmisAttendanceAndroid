@@ -1,6 +1,7 @@
 package com.sdjzu.xg14.glmisattendanceandroid.login;
 
 import com.sdjzu.xg14.glmisattendanceandroid.core.mvp.IBaseView;
+import com.sdjzu.xg14.glmisattendanceandroid.model.Employee;
 import com.sdjzu.xg14.glmisattendanceandroid.model.User;
 
 /**
@@ -11,7 +12,7 @@ import com.sdjzu.xg14.glmisattendanceandroid.model.User;
  */
 
 public interface LoginView extends IBaseView {
-    void loginSucceed(String msg);
+    void loginSucceed(Employee employee);
 
     void loginFailed(String msg);
 }
