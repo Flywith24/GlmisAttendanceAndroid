@@ -27,18 +27,6 @@
         <item name="android:textColorPrimary">@color/grey</item>
     </style>
 
-    <style name="RecyclerViewStyle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:overScrollMode">never</item>
-        <item name="android:fadingEdge">none</item>
-        <item name="android:scrollbars">none</item>
-    </style>
-
-    <style name="RecyclerItemViewStyle">
-        <item name="android:background">?android:attr/selectableItemBackground</item>
-    </style>
-
     <!--登陆界面的样式-->
     <style name="Login_style">
         <item name="android:textSize">18sp</item>

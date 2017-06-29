@@ -3,13 +3,13 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_info"
-            android:title="我的信息" />
+            android:title="@string/myInfo" />
 
         <item
             android:id="@+id/nav_logout"
-            android:title="退出登录" />
+            android:title="@string/logout" />
         <item
             android:id="@+id/nav_about"
-            android:title="关于我们" />
+            android:title="@string/aboutUs" />
     </group>
 </menu>

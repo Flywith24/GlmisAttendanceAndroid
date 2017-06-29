@@ -4,15 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
 import com.sdjzu.xg14.glmisattendanceandroid.HomeActivity;
 import com.sdjzu.xg14.glmisattendanceandroid.R;
@@ -21,10 +19,9 @@ import com.sdjzu.xg14.glmisattendanceandroid.core.AppStatusTracker;
 import com.sdjzu.xg14.glmisattendanceandroid.core.mvp.MvpActivity;
 import com.sdjzu.xg14.glmisattendanceandroid.model.Employee;
 import com.sdjzu.xg14.glmisattendanceandroid.model.User;
+import com.sdjzu.xg14.glmisattendanceandroid.utils.KeyBoardHelper;
 import com.sdjzu.xg14.glmisattendanceandroid.utils.L;
 import com.sdjzu.xg14.glmisattendanceandroid.utils.T;
-
-import org.jsoup.select.Evaluator;
 
 /**
  * Created on 19/05/2017.
@@ -36,9 +33,12 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
 
     private EditText mUsername;
     private EditText mPassword;
-    private Button mLogin;
+    private LinearLayout mLayoutContent;
+    private LinearLayout mLayoutBottom;
+    private int bottomHeight;
     private String username;
     private String password;
+    private KeyBoardHelper mKeyBoardHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +55,11 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
     protected void setUpView() {
         mUsername = (EditText) findViewById(R.id.username_et);
         mPassword = (EditText) findViewById(R.id.password_et);
-        mLogin = (Button) findViewById(R.id.login_btn);
-        mLogin.setOnClickListener(this);
+        Button login = (Button) findViewById(R.id.login_btn);
+        login.setOnClickListener(this);
+        mLayoutBottom = (LinearLayout) findViewById(R.id.layout_bottom);
+        mLayoutContent = (LinearLayout) findViewById(R.id.layout_content);
+        softKeyboardEvent();
     }
 
     @Override
@@ -82,6 +85,12 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
             L.d("yyz", password);
             mvpPresenter.loadLoginData(new User(username, password));
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mKeyBoardHelper.onDestory();
     }
 
     /**
@@ -125,6 +134,56 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
         finish();
         AppStatusTracker.getInstance().setAppStatus(ConstantValues.STATUS_ONLINE);
     }
+
+    /**
+     * 软键盘出现时不遮挡登陆按钮
+     */
+    private void softKeyboardEvent() {
+        mKeyBoardHelper = new KeyBoardHelper(this);
+        mKeyBoardHelper.onCreate();
+        mKeyBoardHelper.setOnKeyBoardStatusChangeListener(onKeyBoardStatusChangeListener);
+        mLayoutBottom.post(new Runnable() {
+            @Override
+            public void run() {
+                bottomHeight = mLayoutBottom.getHeight();
+            }
+        });
+    }
+
+    //软件盘状态改变的监听
+    private KeyBoardHelper.OnKeyBoardStatusChangeListener onKeyBoardStatusChangeListener =
+            new KeyBoardHelper.OnKeyBoardStatusChangeListener() {
+
+                @Override
+                public void OnKeyBoardPop(int keyBoardheight) {
+
+                    final int height = keyBoardheight;
+                    if (bottomHeight > height) {
+                        mLayoutBottom.setVisibility(View.GONE);
+                    } else {
+                        int offset = bottomHeight - height;
+                        final ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) mLayoutContent
+                                .getLayoutParams();
+                        lp.topMargin = offset;
+                        mLayoutContent.setLayoutParams(lp);
+                    }
+
+                }
+
+                @Override
+                public void OnKeyBoardClose(int oldKeyBoardheight) {
+                    if (View.VISIBLE != mLayoutBottom.getVisibility()) {
+                        mLayoutBottom.setVisibility(View.VISIBLE);
+                    }
+                    final ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) mLayoutContent
+                            .getLayoutParams();
+                    if (lp.topMargin != 0) {
+                        lp.topMargin = 0;
+                        mLayoutContent.setLayoutParams(lp);
+                    }
+
+                }
+            };
 
     /**
      * 跳转到主页

@@ -19,7 +19,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  */
 
 public class AppClient {
-    public static Retrofit mRetrofit;
+    private static Retrofit mRetrofit;
 
     public static Retrofit retrofit() {
         if (mRetrofit == null) {

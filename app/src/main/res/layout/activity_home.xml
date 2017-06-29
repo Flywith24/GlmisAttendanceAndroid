@@ -17,13 +17,27 @@
             android:id="@id/add_attendance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/add_attendance"/>
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/login_btn_selector"
+            android:text="@string/add_attendance"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            />
 
         <Button
             android:id="@id/update_attendance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/update_attendance"/>
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/login_btn_selector"
+            android:text="@string/update_attendance"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            />
 
     </LinearLayout>
 

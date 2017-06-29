@@ -30,7 +30,6 @@ import java.util.Date;
 public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
     private DrawerLayout mDrawerLayout;
-    private NavigationView mNavigationView;
 
     @Override
     protected void setUpContentView() {
@@ -40,8 +39,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void setUpView() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mNavigationView = (NavigationView) findViewById(R.id.nav_view);
-        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();

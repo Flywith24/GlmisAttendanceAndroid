@@ -4,7 +4,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import com.sdjzu.xg14.glmisattendanceandroid.greendao.DaoSession;
 import com.sdjzu.xg14.glmisattendanceandroid.greendao.EmployeeDao;
 import com.sdjzu.xg14.glmisattendanceandroid.model.Employee;
 
-import org.greenrobot.greendao.query.QueryBuilder;
 import org.zakariya.stickyheaders.StickyHeaderLayoutManager;
 
 import java.util.ArrayList;
@@ -33,7 +31,6 @@ import static com.sdjzu.xg14.glmisattendanceandroid.core.MyApplication.getInstan
 
 public class AttendanceFragmentRight extends BaseFragment {
     private List<Employee> mEmployeesRight = new ArrayList<>();
-    private List<String> mDepartments = new ArrayList<>();
     private EmployeeAdapter adapter;
     private RecyclerView recyclerView;
 
@@ -67,12 +64,12 @@ public class AttendanceFragmentRight extends BaseFragment {
         recyclerView.setAdapter(adapter);
         mEmployeesRight.clear();
         DaoSession daoSession = MyApplication.getInstances().getDaoSession();
-        mDepartments = listDepartment(daoSession);
+        List<String> departments = listDepartment(daoSession);
         List<Employee> employees = daoSession.getEmployeeDao().queryBuilder()
                 .where(EmployeeDao.Properties.IsAttendant.eq(true))
                 .orderDesc(EmployeeDao.Properties.Department).list();
         mEmployeesRight.addAll(employees);
-        adapter.addList(mEmployeesRight, mDepartments);
+        adapter.addList(mEmployeesRight, departments);
         adapter.setOnItemClickListener(new EmployeeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, String name) {
@@ -96,15 +93,12 @@ public class AttendanceFragmentRight extends BaseFragment {
         ArrayList<String> result = new ArrayList<>();
         String query = "SELECT DISTINCT " + EmployeeDao.Properties.Department.columnName
                 + " FROM " + EmployeeDao.TABLENAME + " WHERE IS_ATTENDANT = 1";
-        Cursor c = session.getDatabase().rawQuery(query, null);
-        try {
+        try (Cursor c = session.getDatabase().rawQuery(query, null)) {
             if (c.moveToFirst()) {
                 do {
                     result.add(c.getString(0));
                 } while (c.moveToNext());
             }
-        } finally {
-            c.close();
         }
         return result;
     }

@@ -7,7 +7,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import com.idescout.sql.SqlScoutServer;
@@ -30,10 +29,10 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
     protected TextView toolbar_title;
     protected ProgressDialog progressDialog;
 
-    public static final int MODE_BACK = 0;
-    public static final int MODE_DRAWER = 1;
-    public static final int MODE_NONE = 2;
-    public static final int MODE_HOME = 3;
+    protected static final int MODE_BACK = 0;
+    protected static final int MODE_DRAWER = 1;
+    protected static final int MODE_NONE = 2;
+    protected static final int MODE_HOME = 3;
     private static final String TAG = "BaseActivity";
 
     @Override
@@ -161,14 +160,13 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
         ActivityCollector.removeActivity(this);
     }
 
-    public ProgressDialog showProgressDialog() {
+    protected void showProgressDialog() {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("加载中");
         progressDialog.show();
-        return progressDialog;
     }
 
-    public void dismissProgressDialog() {
+    protected void dismissProgressDialog() {
         if (progressDialog != null && progressDialog.isShowing()) {
             // progressDialog.hide();会导致android.view.WindowLeaked
             progressDialog.dismiss();

@@ -74,7 +74,7 @@ public class AppStatusTracker implements Application.ActivityLifecycleCallbacks 
             if (isScreenOff) {
                 return true;
             }
-            if (timestamp != 0l && System.currentTimeMillis() - timestamp > MAX_INTERVAL) {
+            if (timestamp != 0L && System.currentTimeMillis() - timestamp > MAX_INTERVAL) {
                 return true;
             }
         }
@@ -93,7 +93,7 @@ public class AppStatusTracker implements Application.ActivityLifecycleCallbacks 
     @Override
     public void onActivityResumed(Activity activity) {
         isForground = true;
-        timestamp = 0l;
+        timestamp = 0L;
         isScreenOff = false;
     }
 

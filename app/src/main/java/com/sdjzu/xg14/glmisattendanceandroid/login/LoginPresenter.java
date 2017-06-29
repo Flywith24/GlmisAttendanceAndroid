@@ -7,7 +7,6 @@ import com.sdjzu.xg14.glmisattendanceandroid.core.retrofit.ApiCallback;
 import com.sdjzu.xg14.glmisattendanceandroid.model.Employee;
 import com.sdjzu.xg14.glmisattendanceandroid.model.User;
 
-import java.util.List;
 
 /**
  * Created on 19/05/2017.

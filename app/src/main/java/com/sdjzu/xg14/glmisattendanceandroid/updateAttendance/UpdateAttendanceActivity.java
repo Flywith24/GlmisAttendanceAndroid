@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import com.gigamole.library.navigationtabstrip.NavigationTabStrip;
 import com.sdjzu.xg14.glmisattendanceandroid.HomeActivity;
 import com.sdjzu.xg14.glmisattendanceandroid.R;
-import com.sdjzu.xg14.glmisattendanceandroid.addAttendance.AddAttendanceActivity;
 import com.sdjzu.xg14.glmisattendanceandroid.addAttendance.AttendanceFragmentLeft;
 import com.sdjzu.xg14.glmisattendanceandroid.addAttendance.AttendanceFragmentRight;
 import com.sdjzu.xg14.glmisattendanceandroid.core.MyApplication;
@@ -36,8 +35,6 @@ import java.util.List;
  */
 
 public class UpdateAttendanceActivity extends MvpActivity<UpdateAttendancePresenter> implements IUpdateAttendanceView {
-    private ViewPager mViewPager;
-    private NavigationTabStrip mTopNavigationTabStrip;
     private AttendanceFragmentLeft mFragmentLeft;
     private AttendanceFragmentRight mFragmentRight;
     private AttendanceSummary mSummary = null;
@@ -54,11 +51,10 @@ public class UpdateAttendanceActivity extends MvpActivity<UpdateAttendancePresen
 
     @Override
     protected void setUpView() {
-        mViewPager = (ViewPager) findViewById(R.id.viewpager);
-        mTopNavigationTabStrip = (NavigationTabStrip) findViewById(R.id.nts_center);
-
-        mViewPager.setAdapter(new myPagerAdapter(getSupportFragmentManager()));
-        mTopNavigationTabStrip.setViewPager(mViewPager);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        NavigationTabStrip topNavigationTabStrip = (NavigationTabStrip) findViewById(R.id.nts_center);
+        viewPager.setAdapter(new myPagerAdapter(getSupportFragmentManager()));
+        topNavigationTabStrip.setViewPager(viewPager);
     }
 
     @Override

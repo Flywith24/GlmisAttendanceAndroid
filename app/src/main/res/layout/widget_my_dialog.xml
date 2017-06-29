@@ -8,14 +8,15 @@
         android:id="@+id/txt_attendance_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="日期"
-        android:layout_marginLeft="25dp"
+        android:text="@string/date"
+        android:layout_marginStart="25dp"
         />
     <EditText
+        android:hint="@string/hint"
         android:id="@id/et_attendance_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
+        android:layout_marginEnd="25dp"
         android:maxLines="1"
         />
 </LinearLayout>

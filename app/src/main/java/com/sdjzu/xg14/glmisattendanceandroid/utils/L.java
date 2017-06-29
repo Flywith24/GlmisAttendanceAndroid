@@ -15,13 +15,13 @@ public class L {
      * 定义6个静态常量，用来表示日志信息的打印等级
      * 由1到5打印等级依次升高
      */
-    public static final int VERBOSE = 1;
-    public static final int DEBUG = 2;
-    public static final int INFO = 3;
-    public static final int WARN = 4;
-    public static final int ERROR = 5;
+    private static final int VERBOSE = 1;
+    private static final int DEBUG = 2;
+    private static final int INFO = 3;
+    private static final int WARN = 4;
+    private static final int ERROR = 5;
 
-    public static final int NOTHING = 6;
+    private static final int NOTHING = 6;
 
     /**
      * 该静态常量的值用来控制你想打印的日志等级；
@@ -29,7 +29,7 @@ public class L {
      * 假如当前LEVEL的值为常量2（DEBUG），那么你只能打印从DEBUG（2）到ERROR（5）之间的日志信息；
      * 假如你要是不想让日志信息打印出现，那么将LEVEL的值置为NOTHING即可。
      */
-    public static final int LEVEL = DEBUG;
+    private static final int LEVEL = DEBUG;
 
     // 调用Log.v()方法打印日志
     public static void v(String tag, String msg) {
