@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,19 +60,18 @@ public class AttendanceFragmentRight extends BaseFragment {
         recyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_view1);
         recyclerView.setLayoutManager(new StickyHeaderLayoutManager());
         adapter = new EmployeeAdapter();
-
     }
 
     @Override
     public void setUpData() {
-        mEmployeesRight.clear();
         recyclerView.setAdapter(adapter);
-        DaoSession session = getInstances().getDaoSession();
-        QueryBuilder<Employee> qb = session.getEmployeeDao().queryBuilder();
-        mDepartments = listDepartment(session);
-        qb.where(EmployeeDao.Properties.IsAttendant.eq(true))
-                .orderAsc(EmployeeDao.Properties.Department);
-        mEmployeesRight.addAll(qb.list());
+        mEmployeesRight.clear();
+        DaoSession daoSession = MyApplication.getInstances().getDaoSession();
+        mDepartments = listDepartment(daoSession);
+        List<Employee> employees = daoSession.getEmployeeDao().queryBuilder()
+                .where(EmployeeDao.Properties.IsAttendant.eq(true))
+                .orderDesc(EmployeeDao.Properties.Department).list();
+        mEmployeesRight.addAll(employees);
         adapter.addList(mEmployeesRight, mDepartments);
         adapter.setOnItemClickListener(new EmployeeAdapter.OnItemClickListener() {
             @Override

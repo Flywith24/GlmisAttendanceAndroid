@@ -67,12 +67,12 @@ public class AttendanceFragmentLeft extends BaseFragment {
     @Override
     public void setUpData() {
         mEmployeesLeft.clear();
-        DaoSession session = getInstances().getDaoSession();
-        QueryBuilder<Employee> qb = session.getEmployeeDao().queryBuilder();
-        mDepartments = listDepartment(session);
-        qb.where(EmployeeDao.Properties.IsAttendant.eq(false))
-                .orderAsc(EmployeeDao.Properties.Department);
-        mEmployeesLeft.addAll(qb.list());
+        DaoSession daoSession = MyApplication.getInstances().getDaoSession();
+        mDepartments = listDepartment(daoSession);
+        List<Employee> employees = daoSession.getEmployeeDao().queryBuilder()
+                .where(EmployeeDao.Properties.IsAttendant.eq(false))
+                .orderDesc(EmployeeDao.Properties.Department).list();
+        mEmployeesLeft.addAll(employees);
         adapter.addList(mEmployeesLeft, mDepartments);
         adapter.setOnItemClickListener(new EmployeeAdapter.OnItemClickListener() {
             @Override

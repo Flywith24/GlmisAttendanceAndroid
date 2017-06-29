@@ -20,9 +20,11 @@
         </activity>
         <activity
             android:name=".HomeActivity"
-            android:launchMode="singleTask">
-        </activity>
-        <activity android:name=".addAttendance.AddAttendanceActivity"/>
+            android:launchMode="singleTask"/>
+        <activity
+            android:name=".addAttendance.AddAttendanceActivity"
+            android:launchMode="singleTask"/>
+
         <activity android:name=".updateAttendance.UpdateAttendanceActivity"/>
     </application>
 

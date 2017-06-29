@@ -1,5 +1,7 @@
 package com.sdjzu.xg14.glmisattendanceandroid.addAttendance;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sdjzu.xg14.glmisattendanceandroid.core.mvp.BasePresenter;
@@ -68,6 +70,7 @@ public class AddAttendancePresenter extends BasePresenter<IAddAttendanceView> {
         Gson gson = new Gson();
         List<Employee> employees = gson.fromJson(model, new TypeToken<List<Employee>>() {
         }.getType());
+        Log.d("yyz", "handleData: ");
         return employees;
     }
 

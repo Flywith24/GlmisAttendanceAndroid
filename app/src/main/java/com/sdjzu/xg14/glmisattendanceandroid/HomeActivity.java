@@ -2,6 +2,7 @@ package com.sdjzu.xg14.glmisattendanceandroid;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -14,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
 import com.sdjzu.xg14.glmisattendanceandroid.addAttendance.AddAttendanceActivity;
 import com.sdjzu.xg14.glmisattendanceandroid.core.BaseActivity;
 import com.sdjzu.xg14.glmisattendanceandroid.login.LoginActivity;
@@ -21,10 +24,14 @@ import com.sdjzu.xg14.glmisattendanceandroid.updateAttendance.UpdateAttendanceAc
 import com.sdjzu.xg14.glmisattendanceandroid.utils.ActivityCollector;
 import com.sdjzu.xg14.glmisattendanceandroid.utils.T;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
     private DrawerLayout mDrawerLayout;
     private NavigationView mNavigationView;
+
     @Override
     protected void setUpContentView() {
         setContentView(R.layout.activity_home, R.string.app_name, MODE_DRAWER);
@@ -54,7 +61,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         Button updateAttendance = (Button) findViewById(R.id.update_attendance);
         updateAttendance.setOnClickListener(this);
     }
-
 
 
     @Override
@@ -93,10 +99,19 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         ActivityCollector.finishAll();
+                        removeLoginData();
                         startActivity(new Intent(HomeActivity.this, LoginActivity.class));
                     }
                 });
         builder.show();
+    }
+
+    private void removeLoginData() {
+        SharedPreferences.Editor editor = getSharedPreferences
+                (String.valueOf(R.string.login_info), MODE_PRIVATE).edit();
+        editor.remove("username");
+        editor.remove("password");
+        editor.apply();
     }
 
     /**
@@ -105,7 +120,12 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     private void showDialog() {
         LayoutInflater inflater = getLayoutInflater();
         View view = inflater.inflate(R.layout.widget_my_dialog, (ViewGroup) findViewById(R.id.dialog));
-        final EditText et_name = (EditText) view.findViewById(R.id.et);
+        final EditText et_name = (EditText) view.findViewById(R.id.et_attendance_name);
+        TextView txt_time = (TextView) view.findViewById(R.id.txt_attendance_time);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        //设置考勤时间为当前日期
+        final String time = formatter.format(new Date(System.currentTimeMillis()));
+        txt_time.setText("a" + time);
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setMessage("请输入考勤名称")
                 .setNegativeButton("取消", null)
@@ -123,7 +143,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
                     } else {
                         dialog.dismiss();
                         Intent intent = new Intent(HomeActivity.this, AddAttendanceActivity.class);
-                        intent.putExtra("attendance_name", et_name.getText().toString());
+                        intent.putExtra("attendance_name", time + et_name.getText().toString());
                         HomeActivity.this.startActivity(intent);
                     }
                 }

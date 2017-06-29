@@ -164,7 +164,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
     public ProgressDialog showProgressDialog() {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("加载中");
-//        progressDialog.show();
+        progressDialog.show();
         return progressDialog;
     }
 

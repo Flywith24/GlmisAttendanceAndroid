@@ -39,7 +39,6 @@ public class LoginActivity extends MvpActivity<LoginPresenter> implements LoginV
     private Button mLogin;
     private String username;
     private String password;
-    private static final String TAG = "LoginActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

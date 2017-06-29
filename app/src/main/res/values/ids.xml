@@ -15,4 +15,5 @@
     <item name="update_attendance" type="id"/>
     <item name="action_update" type="id"/>
     <item name="action_commit" type="id"/>
+    <item name="et_attendance_name" type="id"/>
 </resources>
