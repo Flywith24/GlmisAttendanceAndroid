@@ -2,11 +2,8 @@ package com.sdjzu.xg14.glmisattendanceandroid.addAttendance;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.sdjzu.xg14.glmisattendanceandroid.R;
 import com.sdjzu.xg14.glmisattendanceandroid.core.BaseFragment;
@@ -31,19 +28,12 @@ import static com.sdjzu.xg14.glmisattendanceandroid.core.MyApplication.getInstan
  */
 
 public class AttendanceFragmentLeft extends BaseFragment {
-    private List<Employee> mEmployeesLeft = new ArrayList<>();
-    private EmployeeAdapter adapter;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         enableLazyLoad();
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_add_attendance, container, false);
     }
 
     @Override
@@ -54,22 +44,22 @@ public class AttendanceFragmentLeft extends BaseFragment {
 
     @Override
     public void setUpView(View view) {
-        RecyclerView recyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new StickyHeaderLayoutManager());
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        mRecyclerView.setLayoutManager(new StickyHeaderLayoutManager());
         adapter = new EmployeeAdapter();
-        recyclerView.setAdapter(adapter);
     }
 
     @Override
     public void setUpData() {
-        mEmployeesLeft.clear();
+        mEmployees.clear();
         DaoSession daoSession = MyApplication.getInstances().getDaoSession();
         List<String> departments = listDepartment(daoSession);
         List<Employee> employees = daoSession.getEmployeeDao().queryBuilder()
                 .where(EmployeeDao.Properties.IsAttendant.eq(false))
                 .orderDesc(EmployeeDao.Properties.Department).list();
-        mEmployeesLeft.addAll(employees);
-        adapter.addList(mEmployeesLeft, departments);
+        mEmployees.addAll(employees);
+        adapter.addList(mEmployees, departments);
+        mRecyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(new EmployeeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, String name) {
@@ -77,7 +67,7 @@ public class AttendanceFragmentLeft extends BaseFragment {
                         .where(EmployeeDao.Properties.Name.eq(name)).unique();
                 employee.setIsAttendant(true);
                 getInstances().getDaoSession().getEmployeeDao().update(employee);
-                mEmployeesLeft.remove(employee);
+                mEmployees.remove(employee);
                 adapter.remove(employee);
             }
         });

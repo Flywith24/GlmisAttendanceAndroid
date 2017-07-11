@@ -5,12 +5,19 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sdjzu.xg14.glmisattendanceandroid.R;
+import com.sdjzu.xg14.glmisattendanceandroid.addAttendance.EmployeeAdapter;
+import com.sdjzu.xg14.glmisattendanceandroid.model.Employee;
 import com.sdjzu.xg14.glmisattendanceandroid.utils.L;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created on 19/05/2017.
@@ -20,11 +27,16 @@ import com.sdjzu.xg14.glmisattendanceandroid.utils.L;
  */
 
 public abstract class BaseFragment extends Fragment {
+    protected List<Employee> mEmployees = new ArrayList<>();
+    protected EmployeeAdapter adapter;
+    protected RecyclerView mRecyclerView;
+
     private boolean isVisibleToUser;
     private boolean isViewInitialized;
     private boolean isDataInitialized;
     private boolean isLazyLoadEnabled;
     protected ProgressDialog progressDialog;
+
 
 
     public abstract void setUpView(View view);
@@ -60,7 +72,8 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         L.e(toString(), ":onCreateView");
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(R.layout.fragment_add_attendance, container, false);
+
     }
 
     @Override
